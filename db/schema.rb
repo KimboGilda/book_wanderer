@@ -10,9 +10,64 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_02_131033) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_02_134252) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "books", force: :cascade do |t|
+    t.text "title"
+    t.text "author"
+    t.text "genre"
+    t.text "summary"
+    t.text "short_summary"
+    t.integer "publication_year"
+    t.text "cover_image_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "bookstorebooks", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.bigint "bookstore_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_bookstorebooks_on_book_id"
+    t.index ["bookstore_id"], name: "index_bookstorebooks_on_bookstore_id"
+  end
+
+  create_table "bookstores", force: :cascade do |t|
+    t.text "name"
+    t.text "address"
+    t.boolean "availability"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "read_books", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "book_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_read_books_on_book_id"
+    t.index ["user_id"], name: "index_read_books_on_user_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.text "content"
+    t.bigint "read_book_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["read_book_id"], name: "index_reviews_on_read_book_id"
+  end
+
+  create_table "user_libraries", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_user_libraries_on_book_id"
+    t.index ["user_id"], name: "index_user_libraries_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -26,4 +81,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_02_131033) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "bookstorebooks", "books"
+  add_foreign_key "bookstorebooks", "bookstores"
+  add_foreign_key "read_books", "books"
+  add_foreign_key "read_books", "users"
+  add_foreign_key "reviews", "read_books"
+  add_foreign_key "user_libraries", "books"
+  add_foreign_key "user_libraries", "users"
 end
