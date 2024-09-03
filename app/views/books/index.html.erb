@@ -1,9 +1,18 @@
-<div class="m-3">
-<h1>Results</h1>
-<% @books.each do |book|%>
-    <h3><%= link_to book.title, book_path(book), style: "text-decoration: none; color: inherit"%></h3>
-    <p><strong><%= book.author %></strong></p>
-    <p><%= book.genre %></p>
-    <p><%= book.summary %></p>
-<% end %>
+<div class="container mt-3">
+  <h1>Results</h1>
+  <div class="row">
+    <% @books.each do |book| %>
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="card-title">
+              <%= link_to book.title, book_path(book), style: "text-decoration: none; color: inherit"%>
+            </h3>
+            <p class="card-text"><strong><%= book.author %></strong></p>
+            <p class="card-text"><%= book.genre %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
