@@ -9,5 +9,5 @@ class Book < ApplicationRecord
   has_many :bookstores, through: :bookstore_books
 
   # Validations
-  validates :title, :author, :genre, presence: true
+  validates :title, :author, presence: true
 end
