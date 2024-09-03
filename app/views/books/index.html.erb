@@ -1,0 +1,9 @@
+<div class="m-3">
+<h1>Results</h1>
+<% @books.each do |book|%>
+    <h3><%= link_to book.title, book_path(book), style: "text-decoration: none; color: inherit"%></h3>
+    <p><strong><%= book.author %></strong></p>
+    <p><%= book.genre %></p>
+    <p><%= book.summary %></p>
+<% end %>
+</div>
