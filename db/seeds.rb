@@ -12,8 +12,6 @@ puts "All data destroyed"
 def get_books(books)
   url = "https://www.googleapis.com/books/v1/volumes?q=#{books}&key=#{ENV['API_KEY']}&langRestrict=en"
 
-
-
   response = HTTParty.get(url)
   if response.success?
     items = response.parsed_response['items']
@@ -61,6 +59,12 @@ random_books.each do |data|
   end
   if genre == nil
     genre = Faker::Book.genre
+  end
+  if title == nil
+    title = Faker::Book.title
+  end
+  if summary == nil
+    summary = Faker::Lorem.paragraphs(number: 2).join("\n")
   end
   Book.create!(title: title, author: author, publication_year: publication_year, summary: summary, short_summary: short_summary, genre: genre, cover_image_url:cover_image_url)
 
