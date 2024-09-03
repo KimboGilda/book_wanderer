@@ -66,7 +66,11 @@ random_books.each do |data|
   if summary == nil
     summary = Faker::Lorem.paragraphs(number: 2).join("\n")
   end
-  Book.create!(title: title, author: author, publication_year: publication_year, summary: summary, short_summary: short_summary, genre: genre, cover_image_url:cover_image_url)
+
+  unless Book.exists?(title: title, author: author)
+    Book.create!(title: title, author: author, publication_year: publication_year, summary: summary, short_summary: short_summary, genre: genre, cover_image_url:cover_image_url)
+  end
+
 
 end
 puts "#{random_books.size} random books added *(change in seeds if you need)"
