@@ -21,6 +21,12 @@
 $body-font:  "Baskervville SC", "Work Sans", "Helvetica", "sans-serif";
 $headers-font: "Baskervville SC", "Nunito", "Helvetica", "serif";
 
+
+body {
+  font-family: 'Baskervville SC', serif;
+  color: #0D1B2A;
+}
+
 // To use a font file (.woff) uncomment following lines
 // @font-face {
 //   font-family: "Font Name";
