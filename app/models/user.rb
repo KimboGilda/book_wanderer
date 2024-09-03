@@ -7,7 +7,6 @@ class User < ApplicationRecord
   has_many :read_books, dependent: :destroy
   has_many :books, through: :user_libraries, as: :owned_books
   has_many :books, through: :read_books, as: :books_read
-  # what about read_books connection to books
   has_many :reviews, through: :read_books
   has_many :user_libraries, dependent: :destroy
 end
