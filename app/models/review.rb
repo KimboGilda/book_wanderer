@@ -1,6 +1,6 @@
 class Review < ApplicationRecord
   
-  belongs_to :readbook
+  belongs_to :read_book
   # Validations
   validates :content, presence: true
 end
