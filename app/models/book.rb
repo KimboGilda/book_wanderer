@@ -10,4 +10,12 @@ class Book < ApplicationRecord
 
   # Validations
   validates :title, :author, :genre, presence: true
+  include PgSearch::Model
+
+  pg_search_scope :search_by_title_author_and_genre,
+  against: [ :title, :author, :genre ],
+  using: {
+    tsearch: { prefix: true }
+  }
+
 end

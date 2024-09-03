@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-sm-8">
+      <div id="books">
+        <% if @books.any? %>
+          <% @books.each do |book| %>
+            <h4><%= book.title %></h4>
+            <p><%= book.genre %></p>
+            <p><%= book.author %></p>
+          <% end %>
+        <% else %>
+          <em>Sorry, no books found.</em>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
