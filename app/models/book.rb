@@ -8,7 +8,6 @@ class Book < ApplicationRecord
   has_many :bookstore_books, dependent: :destroy
   has_many :bookstores, through: :bookstore_books
 
-  # Validations
   validates :title, :author, :genre, presence: true
   include PgSearch::Model
 
@@ -17,5 +16,4 @@ class Book < ApplicationRecord
   using: {
     tsearch: { prefix: true }
   }
-
 end
