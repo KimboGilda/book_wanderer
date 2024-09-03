@@ -5,6 +5,7 @@ class BooksController < ApplicationController
     else
       @books = Book.all
     end
+   end
 
   def show
     @book = Book.find(params[:id])
