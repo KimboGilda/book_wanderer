@@ -1,0 +1,10 @@
+<div class="book-container m-3" style="width: 30vw; display: flex; align-items: center;">
+  <div class="book-details" style="flex: 1;">
+    <h2><%= @book.title %></h2>
+    <p><%= @book.author %></p>
+    <p><%= @book.summary %></p>
+  </div>
+  <div class="book-cover" style="flex: 1;">
+    <%= image_tag(@book.cover_image_url, alt: "book-cover", style: "width: 60%; height: auto; object-fit: cover;") %>
+  </div>
+</div>
