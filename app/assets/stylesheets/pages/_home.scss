@@ -1,1 +1,23 @@
-// Specific CSS for your home-page
+.banner {
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: center;
+}
+
+.carousel-category {
+  display: none;
+}
+
+.carousel-category.active {
+  display: block;
+}
