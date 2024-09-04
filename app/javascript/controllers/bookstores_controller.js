@@ -7,10 +7,10 @@ export default class extends Controller {
   }
 
   toggle_map(event) {
-    if (this.mapTarget.style.display === "none") {
-      this.mapTarget.style.display = "block";
+    if (window.getComputedStyle(this.mapTarget).opacity === "0") {
+      this.mapTarget.style.opacity = "1";
     } else {
-      this.mapTarget.style.display = "none";
+      this.mapTarget.style.opacity = "0";
     }
   }
 }
