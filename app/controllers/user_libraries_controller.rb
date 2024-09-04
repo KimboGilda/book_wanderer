@@ -17,11 +17,14 @@ class UserLibrariesController < ApplicationController
   end
 
   def destroy
-    @book = UserLibrary.find_by(book_id: params[:book_id], user_id: current_user.id)
+    @user_library = UserLibrary.find_by(book_id: params[:book_id], user_id: current_user.id)
 
-    @book.destroy
-    @availability = true
-    redirect_to user_library_path(@book), notice: 'Book deleted from your library.'
+    if @user_library
+      @user_library.destroy
+      redirect_to books_path, notice: 'Book removed from your library.'
+    else
+      redirect_to books_path, alert: 'Book not found in your library.'
+    end
 
   end
 end

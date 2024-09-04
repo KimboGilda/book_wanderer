@@ -21,7 +21,7 @@
         <% if @availability %>
           <%= link_to "Add to Library", book_user_libraries_path(@book), data: {turbo_method: :post}, style: "color: #389568; font-weight: bold; border: 1px solid black;", class: "btn btn-sm" %>
         <% else %>
-          <%= link_to "Already in Library", book_user_library_path(@book), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} , style: "color: #6c757d; font-weight: bold;", class: "btn btn-dark btn-sm" %>
+          <%= link_to "Already in Library", book_user_library_path(@book), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, style: "color: #6c757d; font-weight: bold;", class: "btn btn-dark btn-sm" %>
 
         <% end %>
 
