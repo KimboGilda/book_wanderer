@@ -5,46 +5,54 @@
   </div>
 </div>
 
+<div class="container py-5 text-center">
+  <div class="button-box">
+    <div id="btn"></div>
+    <button type="button" class="toggle-btn" onclick="leftClick()">Random</button>
+    <button type="button" class="toggle-btn" onclick="rightClick()">Our Selection</button>
+    <button type="button" class="toggle-btn" onclick="centerClick()">Seasons</button>
+  </div>
+</div>
+
 <div class="container py-5">
-  <div class="btn-group mb-3">
-    <button type="button" class="btn btn-secondary toggle-btn" data-target="random">Random</button>
-    <button type="button" class="btn btn-secondary toggle-btn" data-target="selection">Our Selection</button>
-    <button type="button" class="btn btn-secondary toggle-btn" data-target="vibes">Vibes</button>
-  </div>
-
-<div id="bookCarousel" class="carousel slide" data-bs-ride="carousel" style="max-width: 1550px; margin: 0 auto;">
-  <div class="carousel-inner d-flex">
-    <% @books.each_slice(4).with_index do |books_slice, index| %>
-      <div class="carousel-item <%= 'active' if index.zero? %>">
-        <div class="d-flex justify-content-center" style="gap: 20px;">
-          <% books_slice.each do |book| %>
-            <div class="text-center">
-              <%= image_tag book.cover_image_url, alt: book.title, style: "width: 250px; height: 350px; object-fit: cover; display: block;" %>
-            </div>
-          <% end %>
+  <div id="bookCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <% @books.each_slice(3).with_index do |books_slice, index| %>
+        <div class="carousel-item <%= 'active' if index.zero? %>">
+          <div class="d-flex justify-content-center gap-4">
+            <% books_slice.each do |book| %>
+              <div class="text-center book-item">
+                <%= image_tag book.cover_image_url, alt: book.title, class: "book-image" %>
+                <h5 class="book-title"><%= book.title %></h5>
+              </div>
+            <% end %>
+          </div>
         </div>
-      </div>
-    <% end %>
-  </div>
-
-  <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#bookCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
-
-    <div id="carousel-selection" class="carousel-category">
-      <div id="bookCarouselSelection" class="carousel slide" data-bs-ride="carousel">
-      </div>
+      <% end %>
     </div>
-
-    <div id="carousel-vibes" class="carousel-category">
-      <div id="bookCarouselVibes" class="carousel slide" data-bs-ride="carousel">
-      </div>
-    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
+      <i class="fas fa-chevron-left"></i>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#bookCarousel" data-bs-slide="next">
+      <i class="fas fa-chevron-right"></i>
+      <span class="visually-hidden">Next</span>
+    </button>
   </div>
 </div>
+
+<script>
+  var btn = document.getElementById('btn');
+
+  function leftClick() {
+    btn.style.left = '0';
+  }
+
+  function rightClick() {
+    btn.style.left = '110px';
+  }
+
+  function centerClick() {
+    btn.style.left = '220px';
+  }
+</script>
