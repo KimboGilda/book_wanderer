@@ -1,36 +1,36 @@
-<div class="all" style="display: flex; align-items: flex-start;">
+<div class="all">
 
 <div class="left_01">
-<div class="upper-container" style="margin-top: 0.5rem; margin-left: 2rem; width: 70vw; height: 30vh; display: flex; overflow: hidden;">
+<div class="upper-container">
     <!-- Book Cover and Extra Content Container (e.g nearby button)-->
-    <div class="left-upper-container" style="border: 0.05rem solid black; flex: 1; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+    <div class="left-upper-container">
     
       <!-- Book Cover -->
-      <div class="book-cover" style="flex: 2; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+      <div class="book-cover">
         <%= image_tag(@book.cover_image_url, alt: "book-cover", style: "margin-top: 0.5rem; max-width: 100%; max-height: 100%; object-fit: contain;") %>
       </div>
       
       <!-- Additional Content Below Book Cover -->
-      <div class="extra-content" style="flex: 1; text-align: center; padding-top: 0.5rem;">
+      <div class="extra-content">
          <button class="btn btn-dark btn-sm">Add to User Library</button>
          <button class="btn btn-secondary btn-sm">Nearby </button>
       </div>
     </div>
 
     <!-- Book Details right container-->
-    <div class="book-details ms-3 p-3 text-center" style="border: 0.05rem solid black; flex: 2; padding-left: 1rem; overflow: hidden;">
+    <div class="book-details ms-3 p-3 text-center">
       <h2><%= @book.title %></h2>
       <p><%= @book.author %></p>
       <p class="text-wrap"><%= @book.summary %></p>
     </div>
   </div>
   
-  <div class="map-container" style="width: 70vw; border: 0.05rem solid black; margin-top: 5rem; margin-left: 2rem">
+  <div class="map-container">
     <h1>here goes the map</h1>
   </div>
 </div>
 
-  <div class="right-container" style="width: 15vw; height: 80vh; border: 0.05rem solid black; margin-top: 0.5rem; margin-left: 8rem">
+  <div class="right-container">
     <strong><p class="text-center m-3">Readers also enjoyed</p></strong>
   </div>
 </div>
