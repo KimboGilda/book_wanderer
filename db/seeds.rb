@@ -38,15 +38,26 @@ books = [
   'lolita',
   'the picture of dorian gray',
   'dracula',
-  'the hobbit'
+  'the hobbit',
+  'brave new world',
+  'crime and punishment',
+  'the catcher in the rye',
+  'war and peace',
+  'the odyssey',
+  'ulysses',
+  'the brothers karamazov',
+  'anna karenina',
+  'fahrenheit 451',
+  'frankenstein'
 ]
 
 
 all_books = books.flat_map { |book| get_books(book) }
-random_books = all_books.sample(10)
+# random_books = all_books.sample(10)
 
 
-random_books.each do |data|
+# random_books.each do |data|
+all_books.each do |data|
   title = data['volumeInfo']['title']
   author = data['volumeInfo']['authors']&.join(', ')
   summary = data['volumeInfo']['description']
@@ -68,12 +79,20 @@ random_books.each do |data|
   end
 
   unless Book.exists?(title: title, author: author)
-    Book.create!(title: title, author: author, publication_year: publication_year, summary: summary, short_summary: short_summary, genre: genre, cover_image_url:cover_image_url)
+    Book.create!(
+      title: title,
+      author: author,
+      publication_year: publication_year,
+      summary: summary,
+      short_summary: short_summary,
+      genre: genre,
+      cover_image_url:cover_image_url
+    )
   end
 
 
 end
-puts "#{random_books.size} random books added *(change in seeds if you need)"
+puts "#{all_books.size} random books added *(change in seeds if you need)"
 
 
 
@@ -112,8 +131,11 @@ users = [user_01, user_02, user_03, user_04]
 
 random_read_book = Book.all.sample(5)
 random_read_book.each do |data|
-  rand(1..5).times do
-    ReadBook.create!(user_id: users.sample.id, book_id: data.id)
+  rand(1..10).times do
+    ReadBook.create!(
+      user_id: users.sample.id,
+      book_id: data.id
+    )
 
   end
 end
@@ -127,7 +149,10 @@ content = Faker::Lorem.paragraph
 read_book = ReadBook.all
 
 read_book.each do |data|
-  Review.create!(read_book_id: read_book.sample.id, content: content)
+  Review.create!(
+    read_book_id: read_book.sample.id,
+    content: content
+  )
 
 end
 puts "Reviews added"
@@ -138,8 +163,11 @@ puts "Reviews added"
 #
 random_book_in_library = Book.all.sample(5)
 random_book_in_library.each do |data|
-  rand(1..5).times do
-    UserLibrary.create!(user_id: users.sample.id, book_id: data.id)
+  rand(1..10).times do
+    UserLibrary.create!(
+      user_id: users.sample.id,
+      book_id: data.id
+    )
   end
 end
 puts "Book to USER LIBRARY added"

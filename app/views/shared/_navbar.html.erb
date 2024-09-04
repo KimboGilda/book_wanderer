@@ -1,6 +1,6 @@
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
   <div class="container-fluid">
-    <%= link_to "#", class: "navbar-brand" do %>
+    <%= link_to books_path, class: "navbar-brand" do %>
       <%= image_tag "https://media.istockphoto.com/id/182675742/nl/foto/books.jpg?s=1024x1024&w=is&k=20&c=hPTrAtUNUSdEaOEYT958ovb302_Bp2JUo8R2BGfNYv0=" %>
     <% end %>
 
@@ -23,10 +23,10 @@
       <ul class="navbar-nav me-auto">
         <% if user_signed_in? %>
           <li class="nav-item active">
-            <%= link_to "Home", "#", class: "nav-link" %>
+            <%= link_to "Home", root_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Books", "#", class: "nav-link" %>
+            <%= link_to "Dashboard", user_libraries_path, class: "nav-link" %>
           </li>
           <li class="nav-item dropdown">
           <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

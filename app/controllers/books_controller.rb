@@ -5,9 +5,13 @@ class BooksController < ApplicationController
     else
       @books = Book.all
     end
-   end
+  end
 
   def show
     @book = Book.find(params[:id])
+
+    @availability = !UserLibrary.exists?(book_id: params[:id], user_id: current_user.id)
   end
+
+  
 end
