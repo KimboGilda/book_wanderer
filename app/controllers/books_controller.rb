@@ -5,10 +5,13 @@ class BooksController < ApplicationController
     else
       @books = Book.all
     end
-   end
+  end
 
   def show
     @book = Book.find(params[:id])
+
+
+    @availability = !UserLibrary.exists?(book_id: params[:id], user_id: current_user.id)
 
     # Find users who have read the current book
     # pluck is a built in ruby method that shows as more than one value - it's like distinct in SQL
@@ -21,5 +24,8 @@ class BooksController < ApplicationController
                        .distinct
 
     @usernames = User.where(id: user_ids) 
+
   end
+
+  
 end
