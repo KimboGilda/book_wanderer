@@ -1,6 +1,6 @@
 <div class="all">
 
-<div class="left_01">
+<div class="left_01" data-controller="nearby-bookstores">
 <div class="upper-container">
     <!-- Book Cover and Extra Content Container (e.g nearby button)-->
     <div class="left-upper-container">
@@ -15,7 +15,6 @@
          <button class="btn btn-dark btn-sm">Add to User Library</button>
          <button id="nearby"
           class="btn btn-secondary btn-sm"
-          data-controller="nearby-bookstores"
           data-action="click->nearby-bookstores#toggle_map"
           >Nearby </button>
       </div>
@@ -29,7 +28,7 @@
     </div>
   </div>
   
-  <div class="map-container">
+  <div class="map-container" data-nearby-bookstores-target="map">
     <div style="width: 100%; height: 600px;" data-controller="map" data-map-markers-value="<%= @markers.to_json %>"
     data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
   </div>
