@@ -47,6 +47,7 @@
   border: 0.05rem solid black;
   margin-top: 5rem;
   margin-left: 2rem;
+  /* display: none; */
 }
 
 .right-container {
