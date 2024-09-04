@@ -7,6 +7,26 @@
           <div class="card-body">
             <h3 class="card-title">
               <%= link_to book.title, book_path(book), style: "text-decoration: none; color: inherit"%>
+
+
+
+              <div class="button-group">
+                <% if @availability %>
+                  <%= link_to content_tag(:i, "", class: "fa-regular fa-bookmark"),
+                    '#', style: "color:#708090; font-size: 16px; margin-left: 20px;",
+                    class: 'icon-wrapper',
+                    data: {turbo_method: :post}
+                  %>
+                <% else %>
+                  <%= link_to content_tag(:i, "", class: "fa-solid fa-bookmark"),
+                  '#', style: "color:#708090; font-size: 16px; margin-left: 20px;",
+                  class: 'icon-wrapper',
+                  data: {turbo_method: :post}
+                %>
+                <% end %>
+
+              </div>
+
             </h3>
             <p class="card-text"><strong><%= book.author %></strong></p>
             <p class="card-text"><%= book.genre %></p>

@@ -22,17 +22,18 @@
           <%= link_to "Add to Library",
           book_user_libraries_path(@book),
           data: {turbo_method: :post},
-          style: "color: #389568; font-weight: bold;  border-radius: 5px;
+          style: "font-weight: bold;  border-radius: 5px;
                   border: 1px solid grey;
-                  box-shadow: 0 0 16px rgba(0, 0, 0, .1)", class: "btn btn-sm" %>
+                  box-shadow: 0 0 16px rgba(0, 0, 0, .1);
+                  background-color: #389568", class: "btn btn-sm" %>
         <% else %>
           <%= link_to "Already in Library",
           book_user_library_path(@book),
           data: { turbo_method: :delete },
-          style: "color: #6c757d; font-weight: bold;  border-radius: 5px;
+          style: "font-weight: bold;  border-radius: 5px;
                   border: 1px solid grey;
-                  box-shadow: 0 0 16px rgba(0, 0, 0, .1) ", class: "btn btn-sm" %>
-
+                  box-shadow: 0 0 16px rgba(0, 0, 0, .1);
+                  background-color: #6c757d", class: "btn btn-sm" %>
         <% end %>
 
          <button class="btn btn-secondary btn-sm">Nearby </button>

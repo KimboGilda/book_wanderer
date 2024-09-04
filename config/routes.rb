@@ -14,9 +14,10 @@ Rails.application.routes.draw do
   # resources :books, only: [:index, :show]
   resources :books do
     resources :user_libraries, only: [:create, :destroy]
+    resources :read_books, only: [:destroy, :create]
   end
-
-  resources :user_libraries, only: [:index]
+  resources :read_books, only: [:index, :destroy]
+  resources :user_libraries, only: [:index, :destroy]
   # # do
   #   # POST 'user_libraries', to: 'user_libraries#create'
 
