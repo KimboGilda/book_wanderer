@@ -19,5 +19,7 @@ class BooksController < ApplicationController
                        .where(read_books: { user_id: user_ids })
                        .where.not(id: @book.id)
                        .distinct
+
+    @usernames = User.where(id: user_ids) 
   end
 end
