@@ -1,20 +1,22 @@
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
   <div class="container-fluid">
-    <%= link_to books_path, class: "navbar-brand" do %>
-      <%= image_tag "https://media.istockphoto.com/id/182675742/nl/foto/books.jpg?s=1024x1024&w=is&k=20&c=hPTrAtUNUSdEaOEYT958ovb302_Bp2JUo8R2BGfNYv0=" %>
-    <% end %>
+    <%= link_to root_path, class: "navbar-brand" do %>
+      <%= image_tag "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkS8Jrit_3J_H5hawyIu6mT8CFbVIhJDYmXw&s" %>
+      <% end %>
 
           <div class="nav-search">
             <%= form_with url: books_path, method: :get, class: "d-flex" do %>
               <%= text_field_tag :query,
                     params[:query],
                     class: "form-control",
-                    placeholder: "Type a keyword"
+                    placeholder: "Search books, authors, genres",
+                    class:"search-input"
                 %>
-              <%= submit_tag "Search", name: "", class: "btn btn-primary" %>
+              <%= button_tag type: 'submit', class: "btn", id: "search-button" do %>
+                <i class="fa-solid fa-magnifying-glass"></i>
+              <% end %>
             <% end %>
       </div>
-
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -36,8 +38,7 @@
             <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
           </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <%= link_to "Action", "#", class: "dropdown-item" %>
-              <%= link_to "Another action", "#", class: "dropdown-item" %>
+              <%= link_to "Account", "#", class: "dropdown-item" %>
               <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
             </div>
           </li>
