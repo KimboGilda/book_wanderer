@@ -33,7 +33,7 @@
   .nav-search {
     flex-basis: 400px;
     max-width: 100%;
-    background-color: #f1ecd8;
+    background-color: #eaf7f4;
     border-radius: 25px;
     padding: 6px 9px;
     position: relative;
@@ -44,13 +44,13 @@
       padding: 6px 40px 6px 20px;
       border: none;
       border-radius: 25px;
-      background-color: #f1ecd8;
+      background-color: #eaf7f4;
       font-size: 14px;
-      color: #343a40;
+      color: #0b0b0b;
 
       &:focus {
         outline: none;
-        box-shadow: 0 0 5px rgba(129, 2, 32, 0.5);
+        box-shadow: 0 0 5px rgba(9, 41, 158, 0.5);
       }
     }
 

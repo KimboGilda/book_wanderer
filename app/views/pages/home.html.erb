@@ -1,20 +1,36 @@
-<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('https://images.pexels.com/photos/1485114/pexels-photo-1485114.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');">
+<%# banner  %>
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://images.pexels.com/photos/1485114/pexels-photo-1485114.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');">
   <div class="container">
-    <h1>Top text</h1>
-    <p>Text</p>
+    <h1>Discover Your Next Great Read</h1>
+    <p>AI-Powered Book Recommendations Just For You</p>
+    <a href="#bookCarousel" class="btn btn-primary mt-3">Explore Books</a>
   </div>
 </div>
 
-<div class="container py-5 text-center">
-  <div class="button-box">
-    <div id="btn"></div>
-    <button type="button" class="toggle-btn" onclick="leftClick()">Random</button>
-    <button type="button" class="toggle-btn" onclick="rightClick()">Our Selection</button>
-    <button type="button" class="toggle-btn" onclick="centerClick()">Seasons</button>
-  </div>
-</div>
-
+<%# Showcasing the features %>
 <div class="container py-5">
+  <div class="row text-center">
+    <div class="col-md-4 feature-box">
+      <i class="fas fa-book fa-3x"></i>
+      <h3>Personalized Suggestions</h3>
+      <p>Get tailored book recommendations based on your preferences.</p>
+    </div>
+    <div class="col-md-4 feature-box">
+      <i class="fas fa-random fa-3x"></i>
+      <h3>Random Picks</h3>
+      <p>Feeling adventurous? Let us surprise you with a random pick!</p>
+    </div>
+    <div class="col-md-4 feature-box">
+      <i class="fas fa-calendar-alt fa-3x"></i>
+      <h3>Seasonal Favorites</h3>
+      <p>Discover books perfect for every season or special occasion.</p>
+    </div>
+  </div>
+</div>
+
+<%# Carousel %>
+<div class="container py-5">
+  <h2 class="text-center mb-4">Recommended Books</h2>
   <div id="bookCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <% @books.each_slice(3).with_index do |books_slice, index| %>
@@ -23,8 +39,8 @@
             <% books_slice.each do |book| %>
               <div class="text-center book-item">
                 <% if book.cover_image_url.present? %>
-                <%= image_tag book.cover_image_url, alt: book.title, class: "book-image" %>
-                 <% else %>
+                  <%= image_tag book.cover_image_url, alt: book.title, class: "book-image" %>
+                <% else %>
                   <%= image_tag 'https://salonlfc.com/image-not-found-2/', alt: 'No cover available', class: "book-image" %> 
                 <% end %>
                 <h5 class="book-title"><%= book.title %></h5>
@@ -45,18 +61,12 @@
   </div>
 </div>
 
-<script>
-  var btn = document.getElementById('btn');
-
-  function leftClick() {
-    btn.style.left = '0';
-  }
-
-  function rightClick() {
-    btn.style.left = '110px';
-  }
-
-  function centerClick() {
-    btn.style.left = '220px';
-  }
-</script>
+<%# buttons %>
+<div class="container py-5 text-center">
+  <div class="button-box">
+    <div id="btn"></div>
+    <button type="button" class="toggle-btn" onclick="leftClick()">Random</button>
+    <button type="button" class="toggle-btn" onclick="rightClick()">Our Selection</button>
+    <button type="button" class="toggle-btn" onclick="centerClick()">Seasons</button>
+  </div>
+</div>
