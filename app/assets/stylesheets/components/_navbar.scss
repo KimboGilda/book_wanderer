@@ -14,3 +14,80 @@
 .navbar-brand {
   width: 200px;
 }
+
+.nav-links {
+  font-weight: 600;
+  text-decoration: none;
+  align-items: center;
+  border-bottom-width: 1px;
+  color: hsl(250, 18%, 20%);
+  display: flex;
+  justify-content: center;
+  margin-bottom: -1px;
+  padding: 0.5em 1em;
+  vertical-align: top;
+  font-size: 1rem !important;
+}
+.nav-links:hover {
+  color: #F1ECD8;
+  transform: scale(1.2);
+}
+
+.nav-search {
+flex-basis: 400px;
+max-width: 100%;
+font-size: 14px;
+font-family: Arial, sans-serif;
+font-color: #810220;
+background-color: #F1ECD8;
+padding: 6px 9px;
+position: relative;
+display: inline-block;
+border-radius: 25px;
+box-shadow: 0 3px 6px 1px black;
+}
+
+#search-button {
+position: absolute;
+top: 0;
+right: 0;
+width: 50px;
+height: 100%;
+border-radius: 50%;
+cursor: pointer;
+border: none;
+background: none;
+font-size: 18px;
+}
+
+#search-button i {
+color:rgb(93, 94, 95);
+}
+
+#search-button:hover i {
+  color: rgb(162, 163, 163);
+  }
+
+.fa-magnifying-glass {
+  position: absolute;
+  right: 10px; /* Position the icon */
+  top: 50%;
+  transform: translateY(-50%); /* Center the icon vertically */
+  cursor: pointer; /* Show a pointer cursor */
+  font-size: 16px; /* Size of the icon */
+  color: #888; /* Color of the icon */
+}
+
+.search-input {
+  padding: 3px;
+  padding-right: 200px; /* Add space for the icon */
+  // border: 1px solid #ccc;
+  border-radius: 115px;
+  background-color: #F1ECD8;
+}
+
+.page-container {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
+}
