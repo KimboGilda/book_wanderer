@@ -135,6 +135,9 @@ GEM
     ffi (1.17.0-x86_64-darwin)
     font-awesome-sass (6.5.2)
       sassc (~> 2.0)
+    geocoder (1.8.3)
+      base64 (>= 0.1.0)
+      csv (>= 3.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     httparty (0.22.0)
@@ -143,7 +146,7 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
-    importmap-rails (2.0.1)
+    importmap-rails (1.2.3)
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
@@ -191,6 +194,9 @@ GEM
       racc (~> 1.4)
     orm_adapter (0.5.0)
     pg (1.5.7)
+    pg_search (2.3.7)
+      activerecord (>= 6.1)
+      activesupport (>= 6.1)
     popper_js (2.11.8)
     psych (5.1.2)
       stringio
@@ -300,7 +306,7 @@ GEM
 PLATFORMS
   aarch64-linux
   arm64-darwin-23
-  x86_64-darwin
+  x86_64-darwin-22
   x86_64-linux
 
 DEPENDENCIES
@@ -314,10 +320,12 @@ DEPENDENCIES
   error_highlight (>= 0.4.0)
   faker
   font-awesome-sass (~> 6.1)
+  geocoder
   httparty
-  importmap-rails
+  importmap-rails (~> 1.2.3)
   jbuilder
   pg (~> 1.1)
+  pg_search
   puma (>= 5.0)
   rails (~> 7.1.4)
   sassc-rails

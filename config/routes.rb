@@ -4,9 +4,19 @@ Rails.application.routes.draw do
 
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # resources :user_libraries, only: [:create]
 
-  resources :books, only: [:index, :show]
+
+  # Defines the root path route ("/")
+  # root "posts#index"
+
+
+
+  # resources :books, only: [:index, :show]
+  resources :books do
+    resources :user_libraries, only: [:create, :destroy]
+  end
+
+  resources :user_libraries, only: [:index]
   # # do
   #   # POST 'user_libraries', to: 'user_libraries#create'
 
