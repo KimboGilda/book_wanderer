@@ -34,10 +34,11 @@
   </div>
 </div>
 
-<%# Carousel Section %>
-<div class="container py-5">
+<%# Carousel Section and Button Section Wrapped with the Controller %>
+<div class="container py-5" data-controller="book-carousel">
+  <%# Carousel Section %>
   <h2 class="text-center mb-4">Recommended Books</h2>
-  <div id="bookCarousel" class="scrolling-wrapper d-flex gap-4">
+  <div id="bookCarousel" class="scrolling-wrapper d-flex gap-4" data-book-carousel-target="carousel">
     <% @books.each do |book| %>
       <div class="book-card">
         <% if book.cover_image_url.present? %>
@@ -50,20 +51,17 @@
       </div>
     <% end %>
   </div>
-</div>
 
+  <%# Button Section %>
+  <div class="text-center py-5">
+    <div class="button-box">
+      <button type="button" class="toggle-btn" data-action="click->book-carousel#fetchRandomBooks">Random</button>
+      <button type="button" class="toggle-btn" onclick="rightClick()">Our Selection</button>
+      <button type="button" class="toggle-btn" onclick="centerClick()">Seasons</button>
+    </div>
+  </div>
+</div>
 
 <div class="container py-5">
   <%= @results %>
-</div>
-
-
-<%# Button Section %>
-<div class="container py-5 text-center">
-  <div class="button-box">
-    <div id="btn"></div>
-    <button type="button" class="toggle-btn" onclick="leftClick()">Random</button>
-    <button type="button" class="toggle-btn" onclick="rightClick()">Our Selection</button>
-    <button type="button" class="toggle-btn" onclick="centerClick()">Seasons</button>
-  </div>
 </div>

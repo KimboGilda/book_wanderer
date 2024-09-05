@@ -24,6 +24,19 @@ class PagesController < ApplicationController
     end
   end
 
+  # method for getting random recommendations after clicking on the random btn
+  def random_books
+    @random_books = Book.order("RANDOM()").limit(5)
+
+    respond_to do |format|
+      format.json {
+        render json: {
+          books_html: render_to_string(partial: "books/book", collection: @random_books, as: :book, formats: [:html])
+        }, status: :ok
+      }
+    end
+  end
+
   private
 
   def generate_book_recommendations(text)
