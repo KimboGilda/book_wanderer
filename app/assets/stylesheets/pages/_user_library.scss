@@ -1,0 +1,23 @@
+.card {
+  position: relative;
+}
+.icon-wrapper {
+  color: #708090;
+  font-size: 20px;
+  transition: color 0.3s;
+}
+.button-group {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.icon {
+  color: #708090;
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+.icon:hover {
+  color: #4c6278;
+}
