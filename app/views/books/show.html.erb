@@ -79,13 +79,6 @@
                   <p><small>by <%= book.author %></small></p>
 
                   <%# Display emails of users who read this book %>
-                  <p><strong>Read by:</strong></p>
-                  <ul>
-                    <% ReadBook.where(book_id: book.id).each do |read_book| %>
-                      <% user = User.find(read_book.user_id) %>
-                      <li><%= user.email %></li>
-                    <% end %>
-                  </ul>
                 </div>
               </div>
             </li>
