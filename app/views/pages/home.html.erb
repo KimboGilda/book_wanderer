@@ -42,9 +42,13 @@
     <% @books.each do |book| %>
       <div class="book-card">
         <% if book.cover_image_url.present? %>
+          <%= link_to book_path(book) do %>
           <%= image_tag book.cover_image_url, alt: book.title, class: "book-image" %>
+          <% end %>
         <% else %>
+          <%= link_to book_path(book) do%>
           <%= image_tag 'https://salonlfc.com/image-not-found-2/', alt: 'No cover available', class: "book-image" %> 
+          <% end %>
         <% end %>
         <h5 class="book-title"><%= book.title %></h5>
         <p class="book-info"><%= book.genre %> | ★★★★☆</p>
