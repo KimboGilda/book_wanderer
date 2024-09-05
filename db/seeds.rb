@@ -52,18 +52,22 @@ books = [
 ]
 
 
-all_books = books.flat_map { |book| get_books(book) }
+# all_books = books.flat_map { |book| get_books(book) }
 # random_books = all_books.sample(10)
 
 
 # random_books.each do |data|
-all_books.each do |data|
-  title = data['volumeInfo']['title']
-  author = data['volumeInfo']['authors']&.join(', ')
-  summary = data['volumeInfo']['description']
-  publication_year = data['volumeInfo']['publishedDate']&.split('-')&.first
-  genre = data['volumeInfo']['categories']&.join(', ')
-  cover_image_url = data['volumeInfo']['imageLinks']&.dig('thumbnail')
+# all_books.each do |data|
+books.each do |data|
+  search_results = get_books(data)
+  first_book = search_results.first
+  next if first_book.nil?
+  title = first_book['volumeInfo']['title']
+  author = first_book['volumeInfo']['authors']&.join(', ')
+  summary = first_book['volumeInfo']['description']
+  publication_year = first_book['volumeInfo']['publishedDate']&.split('-')&.first
+  genre = first_book['volumeInfo']['categories']&.join(', ')
+  cover_image_url = first_book['volumeInfo']['imageLinks']&.dig('thumbnail')
   short_summary = summary
   if author == nil
     author = Faker::Book.author
@@ -92,7 +96,7 @@ all_books.each do |data|
 
 
 end
-puts "#{all_books.size} random books added *(change in seeds if you need)"
+puts "#{books.size} random books added *(change in seeds if you need)"
 
 
 

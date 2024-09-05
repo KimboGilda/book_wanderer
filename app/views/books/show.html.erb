@@ -3,17 +3,19 @@
     <div class="upper-container">
       <%# Book Cover and buttons(e.g nearby button) %>
       <div class="left-upper-container">
-      
+
         <%# Book Cover %>
         <div class="book-cover">
           <%# Check if @book.cover_image_url is NIL  %>
-        <% if @book.cover_image_url %>
+
+        <% if @book.cover_image_url.present? %>
           <%= image_tag(@book.cover_image_url, alt: "book-cover", style: "margin-top: 0.5rem; max-width: 100%; max-height: 100%; object-fit: contain;") %>
         <% else %>
           <p>No such file</p>
         <% end %>
+
         </div>
-        
+
         <%# Additional Content Below Book Cover %>
         <div class="extra-content">
           <%# Check if Book already in Library %>
@@ -35,7 +37,7 @@
                   background-color: #6c757d", class: "btn btn-sm" %>
         <% end %>
 
-          <button class="btn btn-dark btn-sm">Add to User Library</button>
+          <%# <button class="btn btn-dark btn-sm">Add to User Library</button> %>
           <button id="nearby"
             class="btn btn-secondary btn-sm"
             data-action="click->nearby-bookstores#toggle_map"
@@ -50,7 +52,7 @@
         <p class="text-wrap"><%= @book.summary %></p>
       </div>
     </div>
-    
+
     <div class="map-container" data-nearby-bookstores-target="map">
       <div style="width: 100%; height: 600px;" data-controller="map" data-map-markers-value="<%= @markers.to_json %>"
       data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>

@@ -13,33 +13,66 @@
     <button type="button" class="toggle-btn" onclick="centerClick()">Seasons</button>
   </div>
 </div>
-
 <div class="container py-5">
-  <div id="bookCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <% @books.each_slice(3).with_index do |books_slice, index| %>
-        <div class="carousel-item <%= 'active' if index.zero? %>">
-          <div class="d-flex justify-content-center gap-4">
-            <% books_slice.each do |book| %>
-              <div class="text-center book-item">
-               
-                <h5 class="book-title"><%= book.title %></h5>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
-      <i class="fas fa-chevron-left"></i>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#bookCarousel" data-bs-slide="next">
-      <i class="fas fa-chevron-right"></i>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
+
+  <%= @results %>
+  <%= @books_for_carousel %>
+
 </div>
+
+<% if current_user %>
+<div class="container py-5">
+    <div id="bookCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <% @new_books.each_slice(3).with_index do |books_slice, index| %>
+          <div class="carousel-item <%= 'active' if index.zero? %>">
+            <div class="d-flex justify-content-center gap-4">
+              <% books_slice.each do |book| %>
+                <div class="text-center book-item">
+                  <h5 class="book-title"><%= book.title %></h5>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
+        <i class="fas fa-chevron-left"></i>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#bookCarousel" data-bs-slide="next">
+        <i class="fas fa-chevron-right"></i>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+<% else %>
+  <div class="container py-5">
+    <div id="bookCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <% @books.each_slice(3).with_index do |books_slice, index| %>
+          <div class="carousel-item <%= 'active' if index.zero? %>">
+            <div class="d-flex justify-content-center gap-4">
+              <% books_slice.each do |book| %>
+                <div class="text-center book-item">
+                  <h5 class="book-title"><%= book.title %></h5>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
+        <i class="fas fa-chevron-left"></i>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#bookCarousel" data-bs-slide="next">
+        <i class="fas fa-chevron-right"></i>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+<% end %>
 
 <script>
   var btn = document.getElementById('btn');
