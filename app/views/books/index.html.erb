@@ -5,42 +5,43 @@
     <% @books.each do |book| %>
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card h-100">
-          <div class="card-body">
-            <h3 class="card-title">
-            <%= link_to book.title, book_path(book), style: "text-decoration: none; color: inherit"%>
+          <div class="card-content">
+            <img src="<%= book.cover_image_url %>" class="card-img" alt="<%= book.title %> cover image">
+              <div class="card-body">
+                <h3 class="card-title">
+                <%= link_to book.title, book_path(book), style: "text-decoration: none; color: inherit"%>
 
-
-            <% if UserLibrary.exists?(book_id: book.id, user_id: current_user.id) || ReadBook.exists?(book_id: book.id, user_id: current_user.id) %>
-              <% @availability = false %>
-            <% else %>
-              <% @availability = true %>
-            <% end %>
-
-
-              <div class="button-group">
-                <% if @availability == true %>
-
-                  <i class="fa-regular fa-bookmark"></i>
-
-                  <!--<%= link_to content_tag(:i, "", class: "fa-regular fa-bookmark"),
-                    '#', style: "color:#708090; font-size: 16px; margin-left: 20px;",
-                    class: 'icon-wrapper',
-                    data: {turbo_method: :post}
-                  %>-->
+                <% if UserLibrary.exists?(book_id: book.id, user_id: current_user.id) || ReadBook.exists?(book_id: book.id, user_id: current_user.id) %>
+                  <% @availability = false %>
                 <% else %>
-                  <i class="fa-solid fa-bookmark"></i>
-                  <!--<%= link_to content_tag(:i, "", class: "fa-solid fa-bookmark"),
-                  '#', style: "color:#708090; font-size: 16px; margin-left: 20px;",
-                  class: 'icon-wrapper',
-                  data: {turbo_method: :post}
-                %>-->
+                  <% @availability = true %>
                 <% end %>
 
-              </div>
+                  <div class="button-group">
+                    <% if @availability == true %>
 
-            </h3>
-            <p class="card-text"><strong><%= book.author %></strong></p>
-            <p class="card-text"><%= book.genre %></p>
+                      <i class="fa-regular fa-bookmark"></i>
+
+                      <!--<%= link_to content_tag(:i, "", class: "fa-regular fa-bookmark"),
+                        '#', style: "color:#708090; font-size: 16px; margin-left: 20px;",
+                        class: 'icon-wrapper',
+                        data: {turbo_method: :post}
+                      %>-->
+                    <% else %>
+                      <i class="fa-solid fa-bookmark"></i>
+                      <!--<%= link_to content_tag(:i, "", class: "fa-solid fa-bookmark"),
+                      '#', style: "color:#708090; font-size: 16px; margin-left: 20px;",
+                      class: 'icon-wrapper',
+                      data: {turbo_method: :post}
+                    %>-->
+                    <% end %>
+
+                  </div>
+
+                </h3>
+                <p class="card-text"><strong><%= book.author %></strong></p>
+                <p class="card-text"><%= book.genre %></p>
+              </div>
           </div>
         </div>
       </div>
