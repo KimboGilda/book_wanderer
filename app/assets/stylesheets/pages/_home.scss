@@ -1,1 +1,69 @@
-// Specific CSS for your home-page
+.banner {
+  background-size: cover;
+  background-position: center;
+  padding: 100px 0;
+  color: #fff;
+  text-align: center;
+}
+
+.button-box {
+  width: 300px;
+  margin: 35px auto;
+  position: relative;
+  border-radius: 30px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+}
+
+.toggle-btn {
+  padding: 10px 20px;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  outline: none;
+  position: relative;
+  text-align: center;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+#btn {
+  position: absolute;
+  width: 100px;
+  height: 100%;
+  background: #e67e22;
+  border-radius: 30px;
+  transition: .5s;
+  z-index: 0;
+}
+
+.book-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.book-title {
+  width: 200px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 10px;
+}
+
+.book-image {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+}
+
+.carousel-control-prev i, .carousel-control-next i {
+  font-size: 2rem;
+  color: #000;
+}
+
+.carousel-inner {
+  padding-bottom: 50px;
+}

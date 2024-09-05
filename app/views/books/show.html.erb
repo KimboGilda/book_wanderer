@@ -1,30 +1,99 @@
-<div class="all" style="display: flex; align-items: flex-start;">
-  <div class="upper-container" style="margin-top: 0.5rem; margin-left: 2rem; width: 70vw; height: 30vh; display: flex; overflow: hidden;">
-    
-    <!-- Book Cover and Extra Content Container (e.g nearby button)-->
-    <div class="left-upper-container" style="border: 0.05rem solid black; flex: 1; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+<div class="all">
+  <div class="left_01" data-controller="nearby-bookstores">
+    <div class="upper-container">
+      <%# Book Cover and buttons(e.g nearby button) %>
+      <div class="left-upper-container">
       
-      <!-- Book Cover -->
-      <div class="book-cover" style="flex: 2; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-        <%= image_tag(@book.cover_image_url, alt: "book-cover", style: "margin-top: 0.5rem; max-width: 100%; max-height: 100%; object-fit: contain;") %>
+        <%# Book Cover %>
+        <div class="book-cover">
+          <%# Check if @book.cover_image_url is NIL  %>
+        <% if @book.cover_image_url %>
+          <%= image_tag(@book.cover_image_url, alt: "book-cover", style: "margin-top: 0.5rem; max-width: 100%; max-height: 100%; object-fit: contain;") %>
+        <% else %>
+          <p>No such file</p>
+        <% end %>
+        </div>
+        
+        <%# Additional Content Below Book Cover %>
+        <div class="extra-content">
+          <%# Check if Book already in Library %>
+        <% if @availability %>
+          <%= link_to "Add to Library",
+          book_user_libraries_path(@book),
+          data: {turbo_method: :post},
+          style: "font-weight: bold;  border-radius: 5px;
+                  border: 1px solid grey;
+                  box-shadow: 0 0 16px rgba(0, 0, 0, .1);
+                  background-color: #389568", class: "btn btn-sm" %>
+        <% else %>
+          <%= link_to "Already in Library",
+          book_user_library_path(@book),
+          data: { turbo_method: :delete },
+          style: "font-weight: bold;  border-radius: 5px;
+                  border: 1px solid grey;
+                  box-shadow: 0 0 16px rgba(0, 0, 0, .1);
+                  background-color: #6c757d", class: "btn btn-sm" %>
+        <% end %>
+
+          <button class="btn btn-dark btn-sm">Add to User Library</button>
+          <button id="nearby"
+            class="btn btn-secondary btn-sm"
+            data-action="click->nearby-bookstores#toggle_map"
+          >Nearby </button>
+        </div>
       </div>
-      
-      <!-- Additional Content Below Book Cover -->
-      <div class="extra-content" style="flex: 1; text-align: center; padding-top: 0.5rem;">
-         <button class="btn btn-dark btn-sm">Add to User Library</button>
-         <button class="btn btn-secondary btn-sm">Nearby </button>
+
+      <%# Book Details right container %>
+      <div class="book-details ms-3 p-3 text-center">
+        <h2><%= @book.title %></h2>
+        <p><%= @book.author %></p>
+        <p class="text-wrap"><%= @book.summary %></p>
       </div>
     </div>
     
-    <!-- Book Details right container-->
-    <div class="book-details ms-3 p-3 text-center" style="border: 0.05rem solid black; flex: 2; padding-left: 1rem; overflow: hidden;">
-      <h2><%= @book.title %></h2>
-      <p><%= @book.author %></p>
-      <p><%= @book.summary %></p>
+    <div class="map-container" data-nearby-bookstores-target="map">
+      <div style="width: 100%; height: 600px;" data-controller="map" data-map-markers-value="<%= @markers.to_json %>"
+      data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
     </div>
   </div>
 
-  <div class="right-container" style="width: 15vw; height: 80vh; border: 0.05rem solid black; margin-top: 0.5rem; margin-left: 8rem">
-    <p class="text-center m-3">Reviews</p>
+  <%# Right Container %>
+  <div class="right-container">
+    <strong><p class="text-center m-3">Readers also enjoyed</p></strong>
+
+    <%# Loop through the @other_books %>
+    <div class="related-books">
+      <% if @other_books.present? %>
+        <ul class="list-group">
+          <% @other_books.each do |book| %>
+            <li class="list-group-item">
+              <div class="related-book-item">
+               <%# book cover %>
+                <div class="related-book-cover">
+                  <%= image_tag(book.cover_image_url, alt: book.title, style: "width: 50px; height: 75px; object-fit: contain;") %>
+                </div>
+
+                <%# book title and author %>
+                <div class="related-book-details ms-2">
+                  <%= link_to book.title, book_path(book), class: "fw-bold readers-liked" %>
+                  <p><small>by <%= book.author %></small></p>
+
+                  <%# Display emails of users who read this book %>
+                  <p><strong>Read by:</strong></p>
+                  <ul>
+                    <% ReadBook.where(book_id: book.id).each do |read_book| %>
+                      <% user = User.find(read_book.user_id) %>
+                      <li><%= user.email %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>No other books were found.</p>
+      <% end %>
+    </div>
   </div>
 </div>
