@@ -1,2 +1,58 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('https://images.pexels.com/photos/1485114/pexels-photo-1485114.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');">
+  <div class="container">
+    <h1>Top text</h1>
+    <p>Text</p>
+  </div>
+</div>
+
+<div class="container py-5 text-center">
+  <div class="button-box">
+    <div id="btn"></div>
+    <button type="button" class="toggle-btn" onclick="leftClick()">Random</button>
+    <button type="button" class="toggle-btn" onclick="rightClick()">Our Selection</button>
+    <button type="button" class="toggle-btn" onclick="centerClick()">Seasons</button>
+  </div>
+</div>
+
+<div class="container py-5">
+  <div id="bookCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <% @books.each_slice(3).with_index do |books_slice, index| %>
+        <div class="carousel-item <%= 'active' if index.zero? %>">
+          <div class="d-flex justify-content-center gap-4">
+            <% books_slice.each do |book| %>
+              <div class="text-center book-item">
+               
+                <h5 class="book-title"><%= book.title %></h5>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
+      <i class="fas fa-chevron-left"></i>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#bookCarousel" data-bs-slide="next">
+      <i class="fas fa-chevron-right"></i>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  var btn = document.getElementById('btn');
+
+  function leftClick() {
+    btn.style.left = '0';
+  }
+
+  function rightClick() {
+    btn.style.left = '110px';
+  }
+
+  function centerClick() {
+    btn.style.left = '220px';
+  }
+</script>
