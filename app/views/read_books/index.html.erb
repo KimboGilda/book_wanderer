@@ -1,5 +1,5 @@
 <div class="container mt-3">
-  <h1>Wishlist</h1>
+  <h1>Read</h1>
   <div class="row">
     <% @books.each do |book| %>
       <div class="col-lg-4 col-md-6 mb-4">
@@ -11,21 +11,16 @@
             </h3>
             <p class="card-text"><strong><%= book.title %></strong></p>
             <p class="card-text"><%= book.genre %></p>
-
+<!--
             <div class="button-group">
-
 
               <%= link_to content_tag(:i, "", class: "fa-regular fa-square-check icon", data: { controller: "hover-icon", action: "mouseenter->hover-icon#hover mouseleave->hover-icon#unhover" }),
                 book_read_books_path(book), style: "color:#708090; font-size: 16px; margin-left: 20px;",
                 class: 'icon-wrapper',
-                data: { turbo_method: :post }
-              %>
-               <%= link_to content_tag(:i, "", class: "fa-solid fa-xmark icon"),
-                user_library_path(book), style: "color:#708090; font-size: 16px; margin-left: 20px;",
-                class: 'icon-wrapper',
                 data: { turbo_method: :delete }
               %>
             </div>
+-->
           </div>
         </div>
       </div>
