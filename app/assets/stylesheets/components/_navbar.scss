@@ -29,44 +29,44 @@
   font-size: 1rem !important;
 }
 .nav-links:hover {
-  color: #F1ECD8;
+  color: #f1ecd8;
   transform: scale(1.2);
 }
 
 .nav-search {
-flex-basis: 400px;
-max-width: 100%;
-font-size: 14px;
-font-family: Arial, sans-serif;
-font-color: #810220;
-background-color: #F1ECD8;
-padding: 6px 9px;
-position: relative;
-display: inline-block;
-border-radius: 25px;
-box-shadow: 0 3px 6px 1px black;
+  flex-basis: 400px;
+  max-width: 100%;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  font-color: #810220;
+  background-color: #f1ecd8;
+  padding: 6px 9px;
+  position: relative;
+  display: inline-block;
+  border-radius: 25px;
+  box-shadow: 0 3px 6px 1px black;
 }
 
 #search-button {
-position: absolute;
-top: 0;
-right: 0;
-width: 50px;
-height: 100%;
-border-radius: 50%;
-cursor: pointer;
-border: none;
-background: none;
-font-size: 18px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 100%;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-size: 18px;
 }
 
 #search-button i {
-color:rgb(93, 94, 95);
+  color: rgb(93, 94, 95);
 }
 
 #search-button:hover i {
   color: rgb(162, 163, 163);
-  }
+}
 
 .fa-magnifying-glass {
   position: absolute;
@@ -83,7 +83,7 @@ color:rgb(93, 94, 95);
   padding-right: 200px; /* Add space for the icon */
   // border: 1px solid #ccc;
   border-radius: 115px;
-  background-color: #F1ECD8;
+  background-color: #f1ecd8;
 }
 
 .page-container {
