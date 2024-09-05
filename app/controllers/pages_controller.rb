@@ -26,7 +26,7 @@ class PagesController < ApplicationController
 
   # method for getting random recommendations after clicking on the random btn
   def random_books
-    @random_books = Book.order("RANDOM()").limit(5)
+    @random_books = Book.order("RANDOM()").limit(6)
 
     respond_to do |format|
       format.json {
