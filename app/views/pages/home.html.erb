@@ -13,75 +13,40 @@
     <button type="button" class="toggle-btn" onclick="centerClick()">Seasons</button>
   </div>
 </div>
-<div class="container py-5">
-
-  <%= @results %>
-  <%= @books_for_carousel %>
-
-</div>
 
 <% if current_user %>
+<button type="button" id="loadUserContent" class="toggle-btn">Load User Books</button>
 <div class="container py-5">
-    <div id="bookCarousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <% @books_for_carousel.each_slice(3).with_index do |books_slice, index| %>
-          <div class="carousel-item <%= 'active' if index.zero? %>">
-            <div class="d-flex justify-content-center gap-4">
-              <% books_slice.each do |book| %>
-                <div class="text-center book-item">
-                  <% if book.cover_image_url.present? %>
-                    <%= image_tag(book.cover_image_url, alt: "book-cover", style: "margin-top: 0.5rem; max-width: 100%; max-height: 100%; object-fit: contain;") %>
-                  <% else %>
-                    <p>No such file</p>
-                  <% end %>
-                  <h5 class="book-title"><%= book.title %></h5>
-                </div>
-              <% end %>
-            </div>
+  <div id="bookCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <% @books_for_carousel.each_slice(3).with_index do |books_slice, index| %>
+        <div class="carousel-item <%= 'active' if index.zero? %>">
+          <div class="d-flex justify-content-center gap-4">
+            <% books_slice.each do |book| %>
+              <div class="text-center book-item">
+                <% if book.cover_image_url.present? %>
+                  <%= image_tag(book.cover_image_url, alt: "book-cover", style: "margin-top: 0.5rem; max-width: 100%; max-height: 100%; object-fit: contain;") %>
+                <% else %>
+                  <p>No such file</p>
+                <% end %>
+                <h5 class="book-title"><%= book.title %></h5>
+              </div>
+            <% end %>
           </div>
-        <% end %>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
-        <i class="fas fa-chevron-left"></i>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#bookCarousel" data-bs-slide="next">
-        <i class="fas fa-chevron-right"></i>
-        <span class="visually-hidden">Next</span>
-      </button>
+        </div>
+      <% end %>
     </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
+      <i class="fas fa-chevron-left"></i>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#bookCarousel" data-bs-slide="next">
+      <i class="fas fa-chevron-right"></i>
+      <span class="visually-hidden">Next</span>
+    </button>
   </div>
-<% else %>
-  <div class="container py-5">
-    <div id="bookCarousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <% @books.each_slice(3).with_index do |books_slice, index| %>
-          <div class="carousel-item <%= 'active' if index.zero? %>">
-            <div class="d-flex justify-content-center gap-4">
-              <% books_slice.each do |book| %>
-                <div class="text-center book-item">
-                  <% if book.cover_image_url.present? %>
-                    <%= image_tag(book.cover_image_url, alt: "book-cover", style: "margin-top: 0.5rem; max-width: 100%; max-height: 100%; object-fit: contain;") %>
-                  <% else %>
-                    <p>No such file</p>
-                  <% end %>
-                  <h5 class="book-title"><%= book.title %></h5>
-                </div>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
-        <i class="fas fa-chevron-left"></i>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#bookCarousel" data-bs-slide="next">
-        <i class="fas fa-chevron-right"></i>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-  </div>
+</div>
+
 <% end %>
 
 <script>
@@ -98,4 +63,6 @@
   function centerClick() {
     btn.style.left = '220px';
   }
+
+
 </script>

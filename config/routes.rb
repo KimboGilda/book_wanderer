@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
+  get 'books_for_carousel', to: 'pages#load_user_content'
+
   # resources :books, only: [:index, :show]
   resources :books do
     resources :user_libraries, only: [:create, :destroy]
