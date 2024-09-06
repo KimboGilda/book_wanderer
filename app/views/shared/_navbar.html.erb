@@ -1,7 +1,9 @@
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
   <div class="container-fluid">
     <%= link_to root_path, class: "navbar-brand" do %>
+
       <%= image_tag "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkS8Jrit_3J_H5hawyIu6mT8CFbVIhJDYmXw&s", class: "navbar-logo" %>
+
     <% end %>
 
     <div class="nav-search">
@@ -28,10 +30,17 @@
             <%= link_to "Home", root_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <%= link_to "Dashboard", user_libraries_path, class: "nav-link" %>
+            <%= link_to "Books", books_path, class: "nav-link" %>
           </li>
-          <li class="nav-item">
-            <%= link_to "Lists", read_books_path, class: "nav-link" %>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dashboard
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="<%= user_libraries_path %>">Wishlist</a></li>
+              <li><a class="dropdown-item" href="<%= read_books_path %>">Read books</a></li>
+            </ul>
           </li>
           <li class="nav-item dropdown">
             <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
