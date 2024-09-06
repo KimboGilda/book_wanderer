@@ -1,19 +1,20 @@
 <div class="container mt-3">
   <h1>Read</h1>
+  <br>
   <div class="row">
     <% @books.each do |book| %>
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card h-100">
+        <div class="card-content">
+          <img src="<%= book.cover_image_url %>" class="card-img" alt="<%= book.title %> cover image">
           <div class="card-body">
             <h3 class="card-title">
-
               <%= link_to book.title, book_path(book), style: "text-decoration: none; color: inherit"%>
             </h3>
             <p class="card-text"><strong><%= book.title %></strong></p>
             <p class="card-text"><%= book.genre %></p>
 <!--
             <div class="button-group">
-
               <%= link_to content_tag(:i, "", class: "fa-regular fa-square-check icon", data: { controller: "hover-icon", action: "mouseenter->hover-icon#hover mouseleave->hover-icon#unhover" }),
                 book_read_books_path(book), style: "color:#708090; font-size: 16px; margin-left: 20px;",
                 class: 'icon-wrapper',
@@ -21,6 +22,7 @@
               %>
             </div>
 -->
+            </div>
           </div>
         </div>
       </div>
