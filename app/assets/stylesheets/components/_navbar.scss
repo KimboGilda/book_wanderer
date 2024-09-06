@@ -1,6 +1,10 @@
 .navbar-lewagon {
   justify-content: space-between;
   background: white;
+  background-color: #556B2F; /* Navbar background color */
+  border-bottom: 2px solid #888; /* Thin line divider with a color */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+  padding-bottom: 8px !important;
 }
 
 .navbar-lewagon .navbar-collapse {
@@ -8,7 +12,10 @@
 }
 
 .navbar-lewagon .navbar-brand img {
-  width: 40px;
+  width: 45px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .navbar-brand {
@@ -16,11 +23,11 @@
 }
 
 .nav-links {
-  font-weight: 600;
+  font-weight: 800;
   text-decoration: none;
   align-items: center;
   border-bottom-width: 1px;
-  color: hsl(250, 18%, 20%);
+  color: #f1ecd8;
   display: flex;
   justify-content: center;
   margin-bottom: -1px;
@@ -29,7 +36,7 @@
   font-size: 1rem !important;
 }
 .nav-links:hover {
-  color: #f1ecd8;
+  color: rgb(162, 163, 163);
   transform: scale(1.2);
 }
 
@@ -79,11 +86,17 @@
 }
 
 .search-input {
+  overflow: visible !important;
   padding: 3px;
-  padding-right: 200px; /* Add space for the icon */
+  width: 100%; /* Add space for the icon */
   // border: 1px solid #ccc;
   border-radius: 115px;
+  border: none;
   background-color: #f1ecd8;
+}
+
+.search-input:focus {
+  outline: none;
 }
 
 .page-container {
