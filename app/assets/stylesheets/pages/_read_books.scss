@@ -26,6 +26,19 @@
   justify-content: space-between;
 }
 
+.card-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+  text-decoration: none;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
 .button-group {
   display: flex;
   justify-content: flex-end;
