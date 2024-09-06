@@ -1,0 +1,52 @@
+.book-card {
+  display: inline-block;
+  width: 200px;
+  padding: 15px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-10px);
+  }
+
+  .book-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    object-fit: scale-down;
+  }
+
+  .book-title {
+    margin-top: 10px;
+    color: #333;
+    font-weight: 600;
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .book-info {
+    color: #777;
+    font-size: 0.9rem;
+    overflow: hidden;
+  }
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+
+  .icon-wrapper, .icon {
+    color: #708090;
+    font-size: 20px;
+    transition: color 0.3s;
+  }
+
+  .icon:hover {
+    color: #4c6278;
+  }
+}

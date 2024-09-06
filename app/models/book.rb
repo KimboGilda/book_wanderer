@@ -8,6 +8,12 @@ class Book < ApplicationRecord
   has_many :bookstore_books, dependent: :destroy
   has_many :bookstores, through: :bookstore_books
 
-  # Validations
   validates :title, :author, :genre, presence: true
+  include PgSearch::Model
+
+  pg_search_scope :search_by_title_author_and_genre,
+  against: [ :title, :author, :genre, :summary ],
+  using: {
+    tsearch: { prefix: true }
+  }
 end

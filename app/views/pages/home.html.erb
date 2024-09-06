@@ -1,2 +1,68 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<%# Banner Section %>
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1532012197267-da84d127e765');">
+  <div class="container">
+    <h1>Unveil Your Next Great Story</h1>
+    <p>AI-Driven Book Discoveries Tailored to You</p>
+    <a href="#bookCarousel" class="btn btn-primary mt-3">Start Your Journey</a>
+  </div>
+</div>
+
+<%# Feature Section %>
+<div class="container py-5">
+  <div class="row text-center">
+    <div class="col-md-4 feature-box">
+      <div class="feature-card">
+        <i class="fas fa-book fa-3x"></i>
+        <h3>Personalized Suggestions</h3>
+        <p>Get tailored book recommendations based on your preferences.</p>
+      </div>
+    </div>
+    <div class="col-md-4 feature-box">
+      <div class="feature-card">
+        <i class="fas fa-random fa-3x"></i>
+        <h3>Random Picks</h3>
+        <p>Feeling adventurous? Let us surprise you with a random pick!</p>
+      </div>
+    </div>
+    <div class="col-md-4 feature-box">
+      <div class="feature-card">
+        <i class="fas fa-calendar-alt fa-3x"></i>
+        <h3>Seasonal Favorites</h3>
+        <p>Discover books perfect for every season or special occasion.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%# Carousel Section and Button Section Wrapped with the Controller %>
+<div class="container py-5" data-controller="book-carousel">
+  <%# Carousel Section %>
+  <h2 class="text-center mb-4">Recommended Books</h2>
+  <div id="bookCarousel" class="scrolling-wrapper d-flex gap-4" data-book-carousel-target="carousel">
+    <% @books.each do |book| %>
+      <div class="book-card">
+        <% if book.cover_image_url.present? %>
+          <%= link_to book_path(book) do %>
+          <%= image_tag book.cover_image_url, alt: book.title, class: "book-image" %>
+          <% end %>
+        <% else %>
+          <%= link_to book_path(book) do%>
+          <%= image_tag 'https://salonlfc.com/image-not-found-2/', alt: 'No cover available', class: "book-image" %> 
+          <% end %>
+        <% end %>
+        <h5 class="book-title"><%= book.title %></h5>
+        <p class="book-info"><%= book.genre %> | ★★★★☆</p>
+      </div>
+    <% end %>
+  </div>
+
+  <%# Button Section %>
+  <div class="text-center py-5">
+    <div class="button-box">
+      <button type="button" class="toggle-btn me-2" data-action="click->book-carousel#fetchRandomBooks">Random</button>
+      <button type="button" class="toggle-btn me-2" onclick="rightClick()">Our Selection</button>
+      <button type="button" class="toggle-btn" onclick="centerClick()">Seasons</button>
+    </div>
+  </div>
+</div>
+

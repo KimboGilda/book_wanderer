@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_03_072729) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_06_091912) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -35,21 +35,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_03_072729) do
     t.index ["bookstore_id"], name: "index_bookstore_books_on_bookstore_id"
   end
 
-  create_table "bookstorebooks", force: :cascade do |t|
-    t.bigint "book_id", null: false
-    t.bigint "bookstore_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["book_id"], name: "index_bookstorebooks_on_book_id"
-    t.index ["bookstore_id"], name: "index_bookstorebooks_on_bookstore_id"
-  end
-
   create_table "bookstores", force: :cascade do |t|
     t.text "name"
     t.text "address"
     t.boolean "availability"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "latitude"
+    t.float "longitude"
   end
 
   create_table "read_books", force: :cascade do |t|
@@ -92,8 +85,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_03_072729) do
 
   add_foreign_key "bookstore_books", "books"
   add_foreign_key "bookstore_books", "bookstores"
-  add_foreign_key "bookstorebooks", "books"
-  add_foreign_key "bookstorebooks", "bookstores"
   add_foreign_key "read_books", "books"
   add_foreign_key "read_books", "users"
   add_foreign_key "reviews", "read_books"

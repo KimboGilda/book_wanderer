@@ -1,1 +1,137 @@
-// Specific CSS for your home-page
+// Banner Styles
+.banner {
+  background-size: cover;
+  background-position: center;
+  padding: 140px 0;
+  text-align: center;
+  color: #fff;
+
+  h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .btn-primary {
+    background-color: #6a9c89;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: darken(#6a9c89, 10%);
+    }
+  }
+}
+
+// Feature Section Styles
+.feature-box {
+  margin-top: 30px;
+
+  .feature-card {
+    padding: 30px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      background: #fff;
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    i {
+      color: #6a9c89;
+      margin-bottom: 15px;
+    }
+
+    h3 {
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #777;
+    }
+  }
+}
+
+// Carousel Styles
+.scrolling-wrapper {
+  overflow-x: auto;
+  white-space: nowrap;
+
+  .book-card {
+    display: inline-block;
+    width: 200px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-10px);
+    }
+
+    .book-image {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .book-title {
+      margin-top: 10px;
+      color: #333;
+      font-weight: 600;
+      max-width: 180px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .book-info {
+      color: #777;
+      font-size: 0.9rem;
+      overflow: hidden;
+    }
+  }
+}
+
+// Button Section Styles
+.button-box {
+  width: 400px;
+  margin: 35px auto;
+  position: relative;
+  border-radius: 30px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.toggle-btn {
+  padding: 12px 40px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #6a9c89, #93cba9);
+  color: white;
+  font-family: "Poppins", sans-serif;
+  border-radius: 30px;
+  transition: transform 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+}
