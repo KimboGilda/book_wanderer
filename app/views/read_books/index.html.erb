@@ -1,26 +1,32 @@
 <div class="container mt-3">
   <h1>Read</h1>
-  <div class="row">
+  <br>
+  <div class="row scrolling-wrapper">
     <% @books.each do |book| %>
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card h-100">
-          <div class="card-body">
-            <h3 class="card-title">
+      <div class="col-lg-3 col-md-6 mb-4">
+        <div class="book-card">
+          <% if book.cover_image_url.present? %>
+            <%= link_to book_path(book) do %>
+              <%= image_tag book.cover_image_url, alt: book.title, class: "book-image" %>
+            <% end %>
+          <% else %>
+            <%= link_to book_path(book) do %>
+              <%= image_tag 'https://salonlfc.com/image-not-found-2/', alt: 'No cover available', class: "book-image" %>
+            <% end %>
+          <% end %>
 
-              <%= link_to book.title, book_path(book), style: "text-decoration: none; color: inherit"%>
-            </h3>
-            <p class="card-text"><strong><%= book.title %></strong></p>
-            <p class="card-text"><%= book.genre %></p>
-<!--
-            <div class="button-group">
+          <h5 class="book-title">
+            <%= link_to book.title, book_path(book), style: "text-decoration: none; color: inherit"%>
+          </h5>
+          <p class="book-info"><strong><%= book.author %></strong></p>
+          <p class="book-info"><%= book.genre %></p>
 
-              <%= link_to content_tag(:i, "", class: "fa-regular fa-square-check icon", data: { controller: "hover-icon", action: "mouseenter->hover-icon#hover mouseleave->hover-icon#unhover" }),
-                book_read_books_path(book), style: "color:#708090; font-size: 16px; margin-left: 20px;",
-                class: 'icon-wrapper',
-                data: { turbo_method: :delete }
-              %>
-            </div>
--->
+          <div class="button-group">
+            <%= link_to content_tag(:i, "", class: "fa-solid fa-xmark icon"),
+              user_library_path(book.id), method: :delete, data: { confirm: 'Are you sure?' },
+              style: "color:#708090; font-size: 16px; margin-left: 20px;",
+              class: 'icon-wrapper'
+            %>
           </div>
         </div>
       </div>

@@ -5,3 +5,7 @@ import "@popperjs/core";
 import "bootstrap";
 import BookstoresController from "./controllers/bookstores_controller.js";
 Stimulus.register("nearby-bookstores", BookstoresController);
+import BookCarouselController from "./controllers/book_carousel_controller.js";
+Stimulus.register("book-carousel", BookCarouselController);
+import { Turbo } from "@hotwired/turbo-rails";
+Turbo.start();

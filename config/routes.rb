@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: "pages#home"
+  get 'random_books', to: 'pages#random_books', defaults: { format: :json }
 
   get "up" => "rails/health#show", as: :rails_health_check
 
@@ -16,6 +17,7 @@ Rails.application.routes.draw do
   end
   resources :read_books, only: [:index, :destroy]
   resources :user_libraries, only: [:index, :destroy]
+  resources :bookstores, only: [:index]
   # # do
   #   # POST 'user_libraries', to: 'user_libraries#create'
 
