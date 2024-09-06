@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   end
   resources :read_books, only: [:index, :destroy]
   resources :user_libraries, only: [:index, :destroy]
+  resources :bookstores, only: [:index]
   # # do
   #   # POST 'user_libraries', to: 'user_libraries#create'
 
