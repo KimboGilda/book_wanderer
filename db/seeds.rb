@@ -54,6 +54,48 @@ books_and_authors = [
   { title: 'frankenstein', author: 'shelley' }
 ]
 
+
+def generate_book_summary(text)
+  # query
+  body = {
+    contents: [
+      {
+        role: "user",
+        parts: [{ text: text }]
+      }
+    ]
+  }
+
+  response = HTTParty.post(
+    "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=#{ENV['AI_API_KEY']}",
+    headers: { 'Content-Type' => 'application/json' },
+    body: body.to_json
+  )
+
+  if response.success?
+    result = JSON.parse(response.body)
+    @recommendations = result["candidates"].first.dig("content", "parts", 0, "text")
+    return @recommendations
+  else
+    @recommendations = "Error: #{response.code}"
+    return nil
+  end
+end
+def generate_book_description(title, author, genre)
+  character = Faker::Fantasy::Tolkien.character
+  setting = Faker::Fantasy::Tolkien.location
+  conflict = Faker::Fantasy::Tolkien.poem
+  adjective = Faker::Adjective.positive
+
+  description = "
+    In the #{genre.downcase} novel '#{title}' by #{author}, readers are introduced to #{character}, a #{adjective} individual living in #{setting}.
+    As the story unfolds, #{character} faces an unexpected challenge: #{conflict}.
+    This gripping tale explores themes of resilience and the human spirit, offering a thought-provoking journey that will stay with readers long after the final page is turned."
+  puts description
+  description.strip
+
+end
+
 books_and_authors.each do |entry|
   book_title = entry[:title]
   author_name = entry[:author]
@@ -72,9 +114,20 @@ books_and_authors.each do |entry|
 
   title = earliest_book['volumeInfo']['title'] || Faker::Book.title
   author = earliest_book['volumeInfo']['authors']&.join(', ') || Faker::Book.author
-  summary = earliest_book['volumeInfo']['description'] || Faker::Lorem.paragraphs(number: 2).join("\n")
-  publication_year = earliest_book['volumeInfo'].dig('publishedDate')&.split('-')&.first
   genre = earliest_book['volumeInfo']['categories']&.join(', ') || Faker::Book.genre
+  first_summary = earliest_book['volumeInfo']['description']
+  if first_summary.nil? || first_summary.length < 50
+    first_summary =  generate_book_description(title, author, genre)
+  end
+  summary = first_summary.truncate(500, separator: ' ', omission: '...')
+
+  # @text = "Write a description of this #{title} book. This description must be 2 or 3 sentences long?"
+  # summary = generate_book_summary(@text)
+  # puts "Generating summary for #{title}"
+
+
+  publication_year = earliest_book['volumeInfo'].dig('publishedDate')&.split('-')&.first
+
   cover_image_url = earliest_book['volumeInfo']['imageLinks']&.dig('thumbnail')
   short_summary = summary
 
@@ -93,6 +146,7 @@ books_and_authors.each do |entry|
   end
 end
 puts "#{Book.all.size} random books processed (added only the earliest for each search)"
+
 
 
 # USER

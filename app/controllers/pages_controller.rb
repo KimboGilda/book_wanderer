@@ -6,13 +6,13 @@ class PagesController < ApplicationController
 
   def home
     @books = Book.all
-    if current_user
-      @twenty_four_recommendations = random_book
+    # if current_user
+    #   @twenty_four_recommendations = random_book
 
-      @three_recommendations_pro_click = @twenty_four_recommendations.sample(6)
-    else
-      @three_recommendations_pro_click = []
-    end
+    #   @three_recommendations_pro_click = @twenty_four_recommendations.sample(6)
+    # else
+    #   @three_recommendations_pro_click = []
+    # end
   end
 
   def random_book
@@ -63,7 +63,11 @@ class PagesController < ApplicationController
           # Extract book information
           book_title = earliest_book['volumeInfo']['title'] || title
           book_author = earliest_book['volumeInfo']['authors']&.join(', ') || author
-          summary = earliest_book['volumeInfo']['description'] || Faker::Lorem.paragraphs(number: 2).join("\n")
+          first_summary = earliest_book['volumeInfo']['description']
+          if first_summary.nil? || first_summary.length < 50
+            first_summary =  generate_book_description(title, author, genre)
+          end
+          summary = first_summary.truncate(500, separator: ' ', omission: '...')
           publication_year = earliest_book['volumeInfo'].dig('publishedDate')&.split('-')&.first
           genre = earliest_book['volumeInfo']['categories']&.join(', ') || Faker::Book.genre
           cover_image_url = earliest_book['volumeInfo']['imageLinks']&.dig('thumbnail')
@@ -88,7 +92,7 @@ class PagesController < ApplicationController
               book = Book.find_by(title: book_title, author: book_author)
               @books_for_carousel << book
             end
-          
+
           end
         end
 
