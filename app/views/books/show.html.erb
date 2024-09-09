@@ -52,8 +52,6 @@
       </div>
     </div>
 
-  <div class="middle-container">
-    <div class="reviews-container-left">
       <div id="reviews" class="reviews" data-review-form-target="reviews" style="margin-top: 40px;">
         <% @book.reviews.each do |review| %>
       <%= render partial: "reviews/review", locals: { review: review } %>
@@ -71,7 +69,6 @@
       <% end %>
     </div>
   </div>
-  </div>
 
     <div class="map-container" data-bookstores-target="map">
       <div style="width: 100%; height: 600px;"
@@ -79,7 +76,6 @@
       data-map-markers-value="<%= @markers.to_json %>"
       data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
     </div>
-  </div>
   </div>  
 
   <%# Right Container %>
