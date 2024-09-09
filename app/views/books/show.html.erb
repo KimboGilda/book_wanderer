@@ -16,20 +16,33 @@
 
         <!-- Additional Content Below Book Cover -->
         <div class="extra-content">
-          <!-- Check if Book is Already in Library -->
-          <% if @availability %>
-            <%= link_to "Add to Library", 
-                        book_user_libraries_path(@book), 
-                        data: { turbo_method: :post }, 
-                        style: "font-weight: bold; border-radius: 5px; border: 1px solid grey; box-shadow: 0 0 16px rgba(0, 0, 0, .1); background-color: #389568;", 
-                        class: "btn btn-sm" %>
-          <% else %>
-            <%= link_to "Already in Library", 
-                        book_user_library_path(@book), 
-                        data: { turbo_method: :delete }, 
-                        style: "font-weight: bold; border-radius: 5px; border: 1px solid grey; box-shadow: 0 0 16px rgba(0, 0, 0, .1); background-color: #6c757d;", 
-                        class: "btn btn-sm" %>
-          <% end %>
+
+          <%# Check if Book already in Library %>
+        <% if @availability == 'available' %>
+          <%= link_to "Add to Library",
+          book_user_libraries_path(@book),
+          data: {turbo_method: :post},
+          style: "font-weight: bold;  border-radius: 5px;
+                  border: 1px solid grey;
+                  box-shadow: 0 0 16px rgba(0, 0, 0, .1);
+                  background-color: #389568", class: "btn btn-sm" %>
+        <% elsif  @availability  == 'library' %>
+          <%= link_to "Already in Library",
+          book_user_library_path(@book),
+          data: { turbo_method: :delete },
+          style: "font-weight: bold;  border-radius: 5px;
+                  border: 1px solid grey;
+                  box-shadow: 0 0 16px rgba(0, 0, 0, .1);
+                  background-color: #6c757d", class: "btn btn-sm" %>
+        <% else %>
+          <%= link_to "Read",
+            read_book_path(@book),
+            data: { turbo_method: :delete },
+            style: "font-weight: bold;  border-radius: 5px;
+                    border: 1px solid grey;
+                    box-shadow: 0 0 16px rgba(0, 0, 0, .1);
+                    background-color: #6c757d", class: "btn btn-sm" %>
+        <% end %>
 
           <!-- Nearby Button -->
           <button id="nearby" class="btn btn-secondary btn-sm" data-action="click->bookstores#toggle_map">
