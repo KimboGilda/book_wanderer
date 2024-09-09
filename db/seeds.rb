@@ -91,7 +91,7 @@ def generate_book_description(title, author, genre)
     In the #{genre.downcase} novel '#{title}' by #{author}, readers are introduced to #{character}, a #{adjective} individual living in #{setting}.
     As the story unfolds, #{character} faces an unexpected challenge: #{conflict}.
     This gripping tale explores themes of resilience and the human spirit, offering a thought-provoking journey that will stay with readers long after the final page is turned."
-  puts description
+  # puts description
   description.strip
 
 end
@@ -104,7 +104,7 @@ books_and_authors.each do |entry|
 
   search_results = get_books(book_title, author_name)
 
-  # Найти самую раннюю книгу из результатов поиска
+  # most earlier book
   earliest_book = search_results.min_by do |book|
     published_date = book['volumeInfo'].dig('publishedDate')
     published_year = published_date&.split('-')&.first.to_i || Float::INFINITY
@@ -182,7 +182,7 @@ users = [user_01, user_02, user_03, user_04]
 # READ BOOKS
 
 
-random_read_book = Book.all.sample(5)
+random_read_book = Book.all.sample(10)
 random_read_book.each do |data|
   rand(1..10).times do
     ReadBook.create!(
@@ -203,12 +203,14 @@ read_book = ReadBook.all
 
 read_book.each do |data|
   Review.create!(
-    read_book_id: read_book.sample.id,
+    read_book_id: data.id,
     content: content
   )
-
+  temp = Book.find_by(id: data.book_id)
+  puts "Reviews for #{temp.title} added"
+rescue => e
+  puts "Error: #{e.message}"
 end
-puts "Reviews added"
 
 
 
