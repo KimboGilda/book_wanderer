@@ -197,11 +197,11 @@ button.btn-dark:hover {
   pointer-events: none;
   opacity: 0;
   width: 80%;
-  height: 600px;
-  border: 0.05rem solid #ced4da;
+  height: 860px;
   margin-top: 2rem;
   border-radius: 8px;
   overflow: hidden;
+  margin-left: 1rem;
 }
 
 .custom-marker {
