@@ -19,7 +19,7 @@
             <%= link_to book.title, book_path(book), style: "text-decoration: none; color: inherit"%>
           </h5>
           <p class="book-info"><strong><%= book.author %></strong></p>
-          <p class="book-info"><%= book.genre %></p>
+          <p class="book-info"><%= book.genre %> | ★★★★☆</p>
 
           <div class="button--group">
             <%= link_to content_tag(:i, "", class: "fa-solid fa-xmark icon"),
