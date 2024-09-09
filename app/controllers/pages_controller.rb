@@ -67,25 +67,28 @@ class PagesController < ApplicationController
           publication_year = earliest_book['volumeInfo'].dig('publishedDate')&.split('-')&.first
           genre = earliest_book['volumeInfo']['categories']&.join(', ') || Faker::Book.genre
           cover_image_url = earliest_book['volumeInfo']['imageLinks']&.dig('thumbnail')
+          if cover_image_url
 
-          # Create only if not already exists
-          unless Book.exists?(title: book_title, author: book_author)
-            book = Book.create!(
-              title: book_title,
-              author: book_author,
-              publication_year: publication_year,
-              summary: summary,
-              short_summary: summary,
-              genre: genre,
-              cover_image_url: cover_image_url
-            )
+            # Create only if not already exists
+            unless Book.exists?(title: book_title, author: book_author)
+              book = Book.create!(
+                title: book_title,
+                author: book_author,
+                publication_year: publication_year,
+                summary: summary,
+                short_summary: summary,
+                genre: genre,
+                cover_image_url: cover_image_url
+              )
 
-            # Add to the carousel array
+              # Add to the carousel array
 
-            @books_for_carousel << book
-          else
-            book = Book.find_by(title: book_title, author: book_author)
-            @books_for_carousel << book
+              @books_for_carousel << book
+            else
+              book = Book.find_by(title: book_title, author: book_author)
+              @books_for_carousel << book
+            end
+          
           end
         end
 

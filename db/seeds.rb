@@ -77,16 +77,18 @@ books_and_authors.each do |entry|
   cover_image_url = earliest_book['volumeInfo']['imageLinks']&.dig('thumbnail')
   short_summary = summary
 
-  unless Book.exists?(title: title, author: author)
-    Book.create!(
-      title: title,
-      author: author,
-      publication_year: publication_year,
-      summary: summary,
-      short_summary: short_summary,
-      genre: genre,
-      cover_image_url: cover_image_url
-    )
+  if cover_image_url
+    unless Book.exists?(title: title, author: author)
+      Book.create!(
+        title: title,
+        author: author,
+        publication_year: publication_year,
+        summary: summary,
+        short_summary: short_summary,
+        genre: genre,
+        cover_image_url: cover_image_url
+      )
+    end
   end
 end
 puts "#{Book.all.size} random books processed (added only the earliest for each search)"
