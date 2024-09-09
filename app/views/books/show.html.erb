@@ -18,8 +18,9 @@
 
         <%# Additional Content Below Book Cover %>
         <div class="extra-content">
+
           <%# Check if Book already in Library %>
-        <% if @availability %>
+        <% if @availability == 'available' %>
           <%= link_to "Add to Library",
           book_user_libraries_path(@book),
           data: {turbo_method: :post},
@@ -27,7 +28,7 @@
                   border: 1px solid grey;
                   box-shadow: 0 0 16px rgba(0, 0, 0, .1);
                   background-color: #389568", class: "btn btn-sm" %>
-        <% else %>
+        <% elsif  @availability  == 'library' %>
           <%= link_to "Already in Library",
           book_user_library_path(@book),
           data: { turbo_method: :delete },
@@ -35,6 +36,14 @@
                   border: 1px solid grey;
                   box-shadow: 0 0 16px rgba(0, 0, 0, .1);
                   background-color: #6c757d", class: "btn btn-sm" %>
+        <% else %>
+          <%= link_to "Read",
+            read_book_path(@book),
+            data: { turbo_method: :delete },
+            style: "font-weight: bold;  border-radius: 5px;
+                    border: 1px solid grey;
+                    box-shadow: 0 0 16px rgba(0, 0, 0, .1);
+                    background-color: #6c757d", class: "btn btn-sm" %>
         <% end %>
 
           <button id="nearby"
@@ -69,7 +78,7 @@
       <% end %>
     </div>
   </div>
-
+    
     <div class="map-container" data-bookstores-target="map">
       <div style="width: 100%; height: 600px;"
       data-controller="map"
