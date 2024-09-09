@@ -10,91 +10,89 @@ User.destroy_all
 Bookstore.destroy_all
 puts "All data destroyed"
 
-def get_books(books)
-  url = "https://www.googleapis.com/books/v1/volumes?q=#{books}&key=#{ENV['API_KEY']}&langRestrict=en"
+require 'httparty'
+require 'faker'
 
-  response = HTTParty.get(url)
-  if response.success?
-    items = response.parsed_response['items']
-    items.nil? ? [] : items
+require 'httparty'
+require 'faker'
+require 'uri'
+
+def get_books(query, author = nil)
+  if author.nil?
+    url = "https://www.googleapis.com/books/v1/volumes?q=#{query}&key=#{ENV['API_KEY']}&langRestrict=en"
   else
-    []
+    url = "https://www.googleapis.com/books/v1/volumes?q=#{query}+inauthor:#{author}&key=#{ENV['API_KEY']}&langRestrict=en"
   end
+  response = HTTParty.get(url)
+  response.success? ? response.parsed_response['items'] || [] : []
 end
-
-
-books = [
-  'the lord of the rings',
-  'harry potter',
-  'game of thrones',
-  'dune',
-  'to kill a mockingbird',
-  '1984',
-  'pride and prejudice',
-  'moby dick',
-  'the hobbit',
-  'the great gatsby',
-  'jane eyre',
-  'wuthering heights',
-  'lolita',
-  'the picture of dorian gray',
-  'dracula',
-  'the hobbit',
-  'brave new world',
-  'crime and punishment',
-  'the catcher in the rye',
-  'war and peace',
-  'the odyssey',
-  'ulysses',
-  'the brothers karamazov',
-  'anna karenina',
-  'fahrenheit 451',
-  'frankenstein'
+books_and_authors = [
+  { title: 'the lord of the rings', author: 'tolkien' },
+  { title: 'harry potter', author: 'rowling' },
+  { title: 'game of thrones', author: 'martin' },
+  { title: 'dune', author: 'herbert' },
+  { title: 'to kill a mockingbird', author: 'lee' },
+  { title: '1984', author: 'orwell' },
+  { title: 'pride and prejudice', author: 'austen' },
+  { title: 'moby dick', author: 'melville' },
+  { title: 'the hobbit', author: 'tolkien' },
+  { title: 'the great gatsby', author: 'fitzgerald' },
+  { title: 'jane eyre', author: 'bronte' },
+  { title: 'wuthering heights', author: 'bronte' },
+  { title: 'lolita', author: 'nabokov' },
+  { title: 'the picture of dorian gray', author: 'wilde' },
+  { title: 'dracula', author: 'stoker' },
+  { title: 'brave new world', author: 'huxley' },
+  { title: 'crime and punishment', author: 'dostoevsky' },
+  { title: 'the catcher in the rye', author: 'salinger' },
+  { title: 'war and peace', author: 'tolstoy' },
+  { title: 'the odyssey', author: 'homer' },
+  { title: 'ulysses', author: 'joyce' },
+  { title: 'the brothers karamazov', author: 'dostoevsky' },
+  { title: 'anna karenina', author: 'tolstoy' },
+  { title: 'fahrenheit 451', author: 'bradbury' },
+  { title: 'frankenstein', author: 'shelley' }
 ]
 
+books_and_authors.each do |entry|
+  book_title = entry[:title]
+  author_name = entry[:author]
 
-all_books = books.flat_map { |book| get_books(book) }
-# random_books = all_books.sample(10)
+  puts "Searching for Book: #{book_title}, Author: #{author_name}"
 
+  search_results = get_books(book_title, author_name)
 
-# random_books.each do |data|
-all_books.each do |data|
-  title = data['volumeInfo']['title']
-  author = data['volumeInfo']['authors']&.join(', ')
-  summary = data['volumeInfo']['description']
-  publication_year = data['volumeInfo']['publishedDate']&.split('-')&.first
-  genre = data['volumeInfo']['categories']&.join(', ')
-  cover_image_url = data['volumeInfo']['imageLinks']&.dig('thumbnail')
+  # Найти самую раннюю книгу из результатов поиска
+  earliest_book = search_results.min_by do |book|
+    published_date = book['volumeInfo'].dig('publishedDate')
+    published_year = published_date&.split('-')&.first.to_i || Float::INFINITY
+  end
+
+  next if earliest_book.nil?
+
+  title = earliest_book['volumeInfo']['title'] || Faker::Book.title
+  author = earliest_book['volumeInfo']['authors']&.join(', ') || Faker::Book.author
+  summary = earliest_book['volumeInfo']['description'] || Faker::Lorem.paragraphs(number: 2).join("\n")
+  publication_year = earliest_book['volumeInfo'].dig('publishedDate')&.split('-')&.first
+  genre = earliest_book['volumeInfo']['categories']&.join(', ') || Faker::Book.genre
+  cover_image_url = earliest_book['volumeInfo']['imageLinks']&.dig('thumbnail')
   short_summary = summary
-  if author == nil
-    author = Faker::Book.author
-  end
-  if genre == nil
-    genre = Faker::Book.genre
-  end
-  if title == nil
-    title = Faker::Book.title
-  end
-  if summary == nil
-    summary = Faker::Lorem.paragraphs(number: 2).join("\n")
-  end
 
-  unless Book.exists?(title: title, author: author)
-    Book.create!(
-      title: title,
-      author: author,
-      publication_year: publication_year,
-      summary: summary,
-      short_summary: short_summary,
-      genre: genre,
-      cover_image_url:cover_image_url
-    )
+  if cover_image_url
+    unless Book.exists?(title: title, author: author)
+      Book.create!(
+        title: title,
+        author: author,
+        publication_year: publication_year,
+        summary: summary,
+        short_summary: short_summary,
+        genre: genre,
+        cover_image_url: cover_image_url
+      )
+    end
   end
-
-
 end
-puts "#{all_books.size} random books added *(change in seeds if you need)"
-
+puts "#{Book.all.size} random books processed (added only the earliest for each search)"
 
 
 # USER
