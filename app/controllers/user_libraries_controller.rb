@@ -17,12 +17,9 @@ class UserLibrariesController < ApplicationController
   end
 
   def destroy
-
     @book = Book.find(params[:id])
-
     @user_library = UserLibrary.find_by(book_id: params[:id], user_id: current_user.id)
     @user_library.destroy
-
     @availability = 'available'
     redirect_to user_libraries_path, notice: 'Book removed from your library.'
   end

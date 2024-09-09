@@ -14,18 +14,12 @@ Rails.application.routes.draw do
 
   # resources :books, only: [:index, :show]
   resources :books do
+    resources :reviews, only: [:create]
     resources :user_libraries, only: [:create, :destroy]
     resources :read_books, only: [:destroy, :create]
   end
   resources :read_books, only: [:index, :destroy]
   resources :user_libraries, only: [:index, :destroy]
   resources :bookstores, only: [:index]
-  # # do
-  #   # POST 'user_libraries', to: 'user_libraries#create'
-
-  # # end
-
-  # post 'read_books/:id/review', to: 'reviews#create'
-
-  # get '/dashboard', to: 'pages#dashboard'
+  
 end

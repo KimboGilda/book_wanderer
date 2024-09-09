@@ -36,12 +36,15 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  padding: 0.5rem;
+  padding: 1rem;
 }
 
 .book-cover img {
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
 }
 
 .extra-content {
@@ -81,31 +84,24 @@
 .book-details h2 {
   font-size: 1.8rem;
   font-weight: bold;
-  color: #007bff;
+  color: #6a9c89;
 }
 
 .book-details p {
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin-bottom: 0.5rem;
-}
-
-.map-container {
-  pointer-events: none;
-  opacity: 0;
-  width: 100%;
-  height: 600px;
-  border: 0.05rem solid #ced4da;
-  margin-top: 2rem;
-  border-radius: 8px;
-  overflow: hidden;
+  text-align: left;
 }
 
 .right-container {
-  width: 20vw;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
   padding: 1rem;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  align-self: flex-start;
 }
 
 .right-container strong {
@@ -150,13 +146,13 @@
 
 .related-book-details a {
   font-weight: bold;
-  color: #007bff;
+  color: #6a9c89;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .related-book-details a:hover {
-  color: #0056b3;
+  color: #3e6757;
 }
 
 .related-book-details p {
@@ -196,7 +192,91 @@ button.btn-dark:hover {
 }
 
 /* Map related elements */
+
+.map-container {
+  pointer-events: none;
+  opacity: 0;
+  width: 80%;
+  height: 860px;
+  margin-top: 2rem;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-left: 1rem;
+}
+
 .custom-marker {
   font-size: 30px;
   color: rgb(200, 87, 87);
+}
+
+/* review related elements */
+.reviews {
+  /* max-width: 600px; */
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.review-item {
+  width: 50%;
+  max-width: 300px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: white;
+  border: 0.05rem solid #ced4da;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.review-item p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+}
+
+.review-item h5 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #6a9c89;
+}
+
+.reviews .review-item + .review-item {
+  margin-top: 1rem;
+}
+
+.button-review-toggle {
+  background-color: #389568;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.button-review-toggle:hover {
+  background-color: #4caf50;
+  opacity: 0.8;
+}
+
+.submit-form {
+  color: white;
+  background-color: #296a98;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.submit-form:hover {
+  background-color: #3581b8;
+  opacity: 0.8;
 }
