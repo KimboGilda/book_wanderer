@@ -101,11 +101,14 @@
 }
 
 .right-container {
-  width: 20vw;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
   padding: 1rem;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  align-self: flex-start;
 }
 
 .right-container strong {
