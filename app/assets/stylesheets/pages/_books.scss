@@ -38,15 +38,15 @@
 .button-group {
   display: flex;
   justify-content: flex-end;
-  margin-top: 10px;
+  margin-top: 250px;
 
   .icon-wrapper, .icon {
-    color: #708090;
-    font-size: 20px;
-    transition: color 0.3s;
-  }
+      color: #708090;
+      font-size: 20px;
+      transition: color 0.3s;
+    }
 
-  .icon:hover {
-    color: #4c6278;
+    .icon:hover {
+      color: #4c6278;
+    }
   }
-}

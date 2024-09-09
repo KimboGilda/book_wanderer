@@ -7,6 +7,7 @@ UserLibrary.destroy_all
 Review.destroy_all
 Book.destroy_all
 User.destroy_all
+Bookstore.destroy_all
 puts "All data destroyed"
 
 require 'httparty'
@@ -169,5 +170,13 @@ random_book_in_library.each do |data|
   end
 end
 puts "Book to USER LIBRARY added"
+
+
+# Bookstores --------------------------------------
+bookstore1 = Bookstore.create!(address: "Asklipiou 1-3, Athina 106 79, Greece", name: "Politeia")
+bookstore2 = Bookstore.create!(address: "Gravias 3, Athina 106 78, Greece", name: "Protoporia")
+bookstore3 = Bookstore.create!(address: "Akadimias 65, Athina 106 78, Greece", name: "Patakis")
+
+
 
 puts 'End for now, mb some changes later'

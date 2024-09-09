@@ -1,5 +1,5 @@
 <div class="all">
-  <div class="left_01" data-controller="nearby-bookstores">
+  <div class="left_01" data-controller="bookstores">
     <div class="upper-container">
       <%# Book Cover and buttons(e.g nearby button) %>
       <div class="left-upper-container">
@@ -37,10 +37,9 @@
                   background-color: #6c757d", class: "btn btn-sm" %>
         <% end %>
 
-          <%# <button class="btn btn-dark btn-sm">Add to User Library</button> %>
           <button id="nearby"
             class="btn btn-secondary btn-sm"
-            data-action="click->nearby-bookstores#toggle_map"
+            data-action="click->bookstores#toggle_map"
           >Nearby </button>
         </div>
       </div>
@@ -52,9 +51,12 @@
         <p class="text-wrap"><%= @book.summary %></p>
       </div>
     </div>
-
-    <div class="map-container" data-nearby-bookstores-target="map">
-      <div style="width: 100%; height: 600px;" data-controller="map" data-map-markers-value="<%= @markers.to_json %>"
+    
+    <div class="map-container" data-bookstores-target="map">
+      <div style="width: 100%; height: 600px;"
+      data-controller="map"
+       // data-map-markers-value='[{"name":"Patakis","address":"Akadimias 65, Athina 106 78, Greece","lat":37.983107,"lng":23.732837},{"name":"Protoporia","address":"Gravias 3, Athina 106 78, Greece","lat":37.983226,"lng":23.73048},{"name":"Politeia","address":"Asklipiou 1-3, Athina 106 79, Greece","lat":37.981981,"lng":23.733991}]'
+      data-map-markers-value="<%= @markers.to_json %>"
       data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
     </div>
   </div>
@@ -81,13 +83,6 @@
                   <p><small>by <%= book.author %></small></p>
 
                   <%# Display emails of users who read this book %>
-                  <p><strong>Read by:</strong></p>
-                  <ul>
-                    <% ReadBook.where(book_id: book.id).each do |read_book| %>
-                      <% user = User.find(read_book.user_id) %>
-                      <li><%= user.email %></li>
-                    <% end %>
-                  </ul>
                 </div>
               </div>
             </li>

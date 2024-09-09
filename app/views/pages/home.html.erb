@@ -1,111 +1,69 @@
-<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('https://images.pexels.com/photos/1485114/pexels-photo-1485114.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');">
+<%# Banner Section %>
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1532012197267-da84d127e765');">
   <div class="container">
-    <h1>Top text</h1>
-    <p>Text</p>
+    <h1>Unveil Your Next Great Story</h1>
+    <p>AI-Driven Book Discoveries Tailored to You</p>
+    <a href="#bookCarousel" class="btn btn-primary mt-3">Start Your Journey</a>
   </div>
 </div>
 
-<div class="container py-5 text-center">
-  <div class="button-box">
-    <div id="btn"></div>
-    <button type="button" class="toggle-btn" onclick="leftClick()">Random</button>
-    <button type="button" class="toggle-btn" onclick="centerClick()" active>Our Selection</button>
-    <button type="button" class="toggle-btn" onclick="rightClick()">Seasons</button>
-  </div>
-</div>
-
-<% if current_user %>
-<%# <button type="button" id="loadUserContent" class="toggle-btn">Load User Books</button> %>
-  <div class="container py-5">
-    <div id="bookCarousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <% @books.each_slice(3).with_index do |books_slice, index| %>
-          <div class="carousel-item <%= 'active' if index.zero? %>">
-            <div class="d-flex justify-content-center gap-4">
-              <% books_slice.each do |book| %>
-                <div class="text-center book-item">
-                  <% if book.cover_image_url.present? %>
-                    <%= image_tag(book.cover_image_url, alt: "book-cover", style: "margin-top: 0.5rem; max-width: 100%; max-height: 100%; object-fit: contain;") %>
-                  <% else %>
-                    <p>No such file</p>
-                  <% end %>
-                  <h5 class="book-title"><%= book.title %></h5>
-                </div>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
+<%# Feature Section %>
+<div class="container py-5">
+  <div class="row text-center">
+    <div class="col-md-4 feature-box">
+      <div class="feature-card">
+        <i class="fas fa-book fa-3x"></i>
+        <h3>Personalized Suggestions</h3>
+        <p>Get tailored book recommendations based on your preferences.</p>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#bookCarousel" data-bs-slide="prev">
-        <i class="fas fa-chevron-left"></i>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#bookCarousel" data-bs-slide="next">
-        <i class="fas fa-chevron-right"></i>
-        <span class="visually-hidden">Next</span>
-      </button>
+    </div>
+    <div class="col-md-4 feature-box">
+      <div class="feature-card">
+        <i class="fas fa-random fa-3x"></i>
+        <h3>Random Picks</h3>
+        <p>Feeling adventurous? Let us surprise you with a random pick!</p>
+      </div>
+    </div>
+    <div class="col-md-4 feature-box">
+      <div class="feature-card">
+        <i class="fas fa-calendar-alt fa-3x"></i>
+        <h3>Seasonal Favorites</h3>
+        <p>Discover books perfect for every season or special occasion.</p>
+      </div>
     </div>
   </div>
+</div>
 
-<% end %>
+<%# Carousel Section and Button Section Wrapped with the Controller %>
+<div class="container py-5" data-controller="book-carousel">
+  <%# Carousel Section %>
+  <h2 class="text-center mb-4">Recommended Books</h2>
+  <div id="bookCarousel" class="scrolling-wrapper d-flex gap-4" data-book-carousel-target="carousel">
+    <% @books.each do |book| %>
+      <div class="book-card">
+        <% if book.cover_image_url.present? %>
+          <%= link_to book_path(book) do %>
+          <%= image_tag book.cover_image_url, alt: book.title, class: "book-image" %>
+          <% end %>
+        <% else %>
+          <%= link_to book_path(book) do%>
+          <%= image_tag 'https://salonlfc.com/image-not-found-2/', alt: 'No cover available', class: "book-image" %> 
+          <% end %>
+        <% end %>
+        <h5 class="book-title"><%= book.title %></h5>
+        <p class="book-info"><%= book.genre %> | ★★★★☆</p>
+      </div>
+    <% end %>
+  </div>
 
-<script>
-  var btn = document.getElementById('btn');
-  let carousel = document.querySelector(".carousel-inner")
-  function leftClick() {
-    btn.style.left = '0';
-    carousel.innerHTML = ''
-    let newContent = `
-      <% @three_recommendations_pro_click.each_slice(3).with_index do |books_slice, index| %>
-        <div class="carousel-item <%= 'active' if index.zero? %>">
-          <div class="d-flex justify-content-center gap-4">
-            <% books_slice.each do |book| %>
-              <div class="text-center book-item">
-                <% if book.cover_image_url.present? %>
-                  <%= image_tag(book.cover_image_url, alt: "book-cover", style: "margin-top: 0.5rem; max-width: 100%; max-height: 100%; object-fit: contain;") %>
-                <% else %>
-                  <p>No such file</p>
-                <% end %>
-                <h5 class="book-title"><%= book.title %></h5>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      <% end %>`
-      carousel.innerHTML += newContent
-
-
-  }
-
-  function rightClick() {
-    btn.style.left = '110px';
-    carousel.innerHTML = ''
-
-  }
-
-  function centerClick() {
-    btn.style.left = '220px';
-    carousel.innerHTML = ''
-         let newContent = `
-     <% @books.each_slice(3).with_index do |books_slice, index| %>
-        <div class="carousel-item <%= 'active' if index.zero? %>">
-          <div class="d-flex justify-content-center gap-4">
-            <% books_slice.each do |book| %>
-              <div class="text-center book-item">
-                <% if book.cover_image_url.present? %>
-                  <%= image_tag(book.cover_image_url, alt: "book-cover", style: "margin-top: 0.5rem; max-width: 100%; max-height: 100%; object-fit: contain;") %>
-                <% else %>
-                  <p>No such file</p>
-                <% end %>
-                <h5 class="book-title"><%= book.title %></h5>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      <% end %>`
-      carousel.innerHTML += newContent
-  }
-
-
-
-</script>
+  <%# Button Section %>
+  # the functionality from anastasiia
+  # @three_recommendations_pro_click
+  <div class="text-center py-5">
+    <div class="button-box">
+      <button type="button" class="toggle-btn me-2" data-action="click->book-carousel#fetchRandomBooks">Random</button>
+      <button type="button" class="toggle-btn me-2" onclick="rightClick()">Our Selection</button>
+      <button type="button" class="toggle-btn" onclick="centerClick()">Seasons</button>
+    </div>
+  </div>
+</div>

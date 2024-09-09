@@ -7,10 +7,13 @@ export default class extends Controller {
   }
 
   toggle_map(event) {
+    console.log("ela");
     if (window.getComputedStyle(this.mapTarget).opacity === "0") {
       this.mapTarget.style.opacity = "1";
+      this.mapTarget.style.pointerEvents = "auto";
     } else {
       this.mapTarget.style.opacity = "0";
+      this.mapTarget.style.pointerEvents = "none";
     }
   }
 }
