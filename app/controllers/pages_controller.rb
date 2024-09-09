@@ -6,12 +6,29 @@ class PagesController < ApplicationController
 
   def home
     @books = Book.all
-    if current_user
-      @twenty_four_recommendations = random_book
-      @three_recommendations_pro_click = @twenty_four_recommendations.sample(6)
-    else
-      @three_recommendations_pro_click = []
-    end
+    # if current_user
+    #   @twenty_four_recommendations = random_book
+    #   @three_recommendations_pro_click = @twenty_four_recommendations.sample(6)
+    # else
+    #   @three_recommendations_pro_click = []
+    # end
+  end
+
+
+  def generate_book_description(title, author, genre)
+    character = Faker::Fantasy::Tolkien.character
+    setting = Faker::Fantasy::Tolkien.location
+    adjective = Faker::Adjective.positive
+    conflict =  Faker::Fantasy::Tolkien.poem
+
+    description = "
+
+        In the #{genre.downcase} novel '#{title}' by #{author}, readers are introduced to #{character}, a #{adjective} individual living in #{setting}.
+        As the story unfolds, #{character} faces an unexpected challenge: #{conflict}.
+        This gripping tale explores themes of resilience and the human spirit, offering a thought-provoking journey that will stay with readers long after the final page is turned.
+
+    "
+    description.strip
   end
 
   def random_book
@@ -78,12 +95,13 @@ class PagesController < ApplicationController
           book_title = earliest_book['volumeInfo']['title'] || title
           book_author = earliest_book['volumeInfo']['authors']&.join(', ') || author
           first_summary = earliest_book['volumeInfo']['description']
+          genre = earliest_book['volumeInfo']['categories']&.join(', ') || Faker::Book.genre
           if first_summary.nil? || first_summary.length < 50
             first_summary =  generate_book_description(title, author, genre)
           end
           summary = first_summary.truncate(500, separator: ' ', omission: '...')
           publication_year = earliest_book['volumeInfo'].dig('publishedDate')&.split('-')&.first
-          genre = earliest_book['volumeInfo']['categories']&.join(', ') || Faker::Book.genre
+
           cover_image_url = earliest_book['volumeInfo']['imageLinks']&.dig('thumbnail')
           if cover_image_url
 

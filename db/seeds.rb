@@ -180,38 +180,45 @@ users = [user_01, user_02, user_03, user_04]
 
 
 # READ BOOKS
-
-
-random_read_book = Book.all.sample(10)
-random_read_book.each do |data|
+# Add ReadBooks for random books
+random_read_books = Book.all.sample(5)
+random_read_books.each do |book|
   rand(1..10).times do
     ReadBook.create!(
       user_id: users.sample.id,
-      book_id: data.id
+      book_id: book.id
     )
-
   end
 end
 puts "Read books added"
 
+# REVIEWS -----------------------------------------------------
 
+# Group ReadBook records by book_id to ensure each book has 2-3 reviews
+grouped_read_books = ReadBook.all.group_by(&:book_id)
 
-# REVIEWS   -----------------------------------------------------
+grouped_read_books.each do |book_id, read_books|
+  # Create 2-3 reviews for each book
+  (2..3).to_a.sample.times do
+    content = "
+    #{Faker::Quote.matz} It reminded me of the book '#{Faker::Book.title}' by #{Faker::Book.author}.
+    I particularly liked the part where #{Faker::Lorem.sentence}.
+    Overall, I think #{Faker::Quote.famous_last_words}.
+    "
+    # Choose a random ReadBook record for the review
+    read_book = read_books.sample
+    Review.create!(
+      read_book_id: read_book.id,
+      content: content
+    )
+  end
 
-content = Faker::Lorem.paragraph
-read_book = ReadBook.all
-
-read_book.each do |data|
-  Review.create!(
-    read_book_id: data.id,
-    content: content
-  )
-  temp = Book.find_by(id: data.book_id)
-  puts "Reviews for #{temp.title} added"
+  # Find the book title for the log message
+  book = Book.find_by(id: book_id)
+  puts "2-3 reviews added for '#{book.title}'"
 rescue => e
   puts "Error: #{e.message}"
 end
-
 
 
 # USER LIBRARY ------------------------------------------
