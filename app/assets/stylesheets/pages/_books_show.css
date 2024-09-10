@@ -208,6 +208,7 @@ button.btn-dark:hover {
 /* Map related elements */
 
 .map-container {
+  position: relative;
   pointer-events: none;
   opacity: 0;
   width: 80%;
@@ -274,6 +275,41 @@ button.btn-dark:hover {
 
 .mapboxgl-popup-tip {
   background-color: white;
+}
+
+/* style the focus buttio */
+.focus-button-container {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.focus-button {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.focus-button:hover {
+  background-color: #fa9c9c;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.focus-button:active {
+  background-color: #0056b3;
+  transform: translateY(1px);
 }
 
 /* review related elements */
