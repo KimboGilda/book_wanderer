@@ -8,6 +8,7 @@ Review.destroy_all
 Book.destroy_all
 User.destroy_all
 Bookstore.destroy_all
+Recommendation.destroy_all
 puts "All data destroyed"
 
 require 'httparty'
