@@ -7,6 +7,9 @@ class Book < ApplicationRecord
   has_many :reviews, through: :read_books
   has_many :bookstore_books, dependent: :destroy
   has_many :bookstores, through: :bookstore_books
+  has_many :recommendations, dependent: :destroy
+  has_many :recommended_users, through: :recommendations, source: :user
+
 
   validates :title, :author, :genre, presence: true
   include PgSearch::Model

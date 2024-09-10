@@ -9,4 +9,7 @@ class User < ApplicationRecord
   has_many :books, through: :read_books, as: :books_read
   has_many :reviews, through: :read_books
   has_many :user_libraries, dependent: :destroy
+  has_many :recommendations, dependent: :destroy
+  has_many :recommended_books, through: :recommendations, source: :book
+
 end

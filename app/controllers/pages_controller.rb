@@ -46,9 +46,12 @@ class PagesController < ApplicationController
   # Action for fetching personalized recommendations when clicking the "Our Collection" button
   def our_selection
     if current_user
-      @twenty_four_recommendations = random_book
 
-      @three_recommendations_pro_click = @twenty_four_recommendations.sample(6)
+
+      @three_recommendations_pro_click = current_user.recommended_books
+
+      # twenty_four_recommendations
+      # @three_recommendations_pro_click = @twenty_four_recommendations.sample(6)
     else
       @three_recommendations_pro_click = []
     end
