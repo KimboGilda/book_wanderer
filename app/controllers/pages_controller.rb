@@ -184,22 +184,6 @@ class PagesController < ApplicationController
           published_year = published_date&.split('-')&.first.to_i || Float::INFINITY
         end
 
-        # Initialize carousel array
-        @books_for_carousel = []
-
-        # Combine titles and authors into pairs
-        books_and_authors = titles.zip(authors)
-
-        # Process each title-author pair
-        books_and_authors.each do |title, author|
-          search_results = get_books(title, author)
-
-          # Find the earliest book (considering missing publication dates)
-          earliest_book = search_results.min_by do |book|
-            published_date = book['volumeInfo'].dig('publishedDate')
-            published_year = published_date&.split('-')&.first.to_i || Float::INFINITY
-          end
-
           next if earliest_book.nil? # Skip if no valid book is found
 
           # Extract book information
@@ -242,7 +226,6 @@ class PagesController < ApplicationController
 
     # Return the array of book objects
     @books_for_carousel
-  end
 
     if @random_rec
       titles, authors = split_array_text(@random_rec)
