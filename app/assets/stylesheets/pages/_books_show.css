@@ -205,7 +205,6 @@ button.btn-dark:hover {
   color: white;
 }
 
-
 /* Map related elements */
 
 .map-container {
@@ -218,7 +217,6 @@ button.btn-dark:hover {
   overflow: hidden;
   margin-left: 1rem;
 }
-
 
 .custom-marker {
   font-size: 30px;
@@ -233,7 +231,6 @@ button.btn-dark:hover {
   align-items: left;
   margin-top: 2rem;
   margin-left: 2rem;
-  padding: 1.5rem;
   background-color: #f8f9fa;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);

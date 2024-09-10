@@ -41,6 +41,7 @@ export default class extends Controller {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         if (data.books_html) {
           this.carouselTarget.innerHTML = data.books_html;
         } else {
