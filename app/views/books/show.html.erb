@@ -26,7 +26,7 @@
                         class: "btn btn-secondary btn-sm" %>
           <% elsif @availability == 'library' %>
             <%= link_to "In Library",
-                        book_user_library_path(@book),
+                        book_user_libraries_path(@book),
                         data: { turbo_method: :delete },
                         class: "btn btn-secondary btn-sm" %>
           <% else %>
