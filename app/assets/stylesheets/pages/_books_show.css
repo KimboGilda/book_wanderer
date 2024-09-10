@@ -215,7 +215,9 @@ button.btn-light:hover {
 
 /* -------------- Map related elements -------------- */
 
+
 .map-container {
+  position: relative;
   pointer-events: none;
   opacity: 0;
   width: 80%;
@@ -226,10 +228,97 @@ button.btn-light:hover {
   margin-left: 1rem;
 }
 
-
 .custom-marker {
   font-size: 30px;
-  color: rgb(200, 87, 87);
+  color: rgb(24, 110, 105);
+  background-color: white; /* Background for contrast */
+  border: 2px solid rgba(24, 110, 105, 0.8); /* Add a border for better visibility */
+  border-radius: 50%; /* Makes it a circular marker */
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Add shadow for depth */
+}
+
+.custom-marker:hover {
+  transform: scale(1.1); /* Slight enlargement on hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* More pronounced shadow on hover */
+}
+
+.mapboxgl-popup-content {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  color: #495057;
+  max-width: 300px;
+  text-align: left;
+}
+
+.mapboxgl-popup-content h3 {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #6a9c89;
+  margin-bottom: 0.5rem;
+}
+
+.mapboxgl-popup-content p {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+.mapboxgl-popup-content a {
+  color: #6a9c89;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.mapboxgl-popup-content a:hover {
+  color: #3e6757;
+  text-decoration: underline;
+}
+
+.mapboxgl-popup-tip {
+  background-color: white;
+}
+
+/* style the focus buttio */
+.focus-button-container {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.focus-button {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.focus-button:hover {
+  background-color: #a34242;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.focus-button:active {
+  background-color: #0056b3;
+  transform: translateY(1px);
 }
 
 /* -------------- review related elements -------------- */
@@ -240,7 +329,6 @@ button.btn-light:hover {
   align-items: left;
   margin-top: 2rem;
   margin-left: 2rem;
-  padding: 1.5rem;
   background-color: #f8f9fa;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
