@@ -9,6 +9,20 @@ class BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
+    
+    # addings instances for creating bookstores markers
+    @bookstores = Bookstore.all
+        # The `geocoded` scope filters only flats with coordinates
+        # Build the markers array
+        @markers = @bookstores.map do |bookstore|
+         {
+          name: bookstore.name,
+          address: bookstore.address, 
+          lat: bookstore.latitude,
+          lng: bookstore.longitude
+        }
+      end
+
 
     if UserLibrary.exists?(book_id: params[:id], user_id: current_user.id)
       @availability = 'library'

@@ -26,7 +26,7 @@ export default class extends Controller {
 
   #addMarkersToMap() {
     this.markersValue.forEach((marker, index) => {
-      console.log(`Adding marker ${index + 1}:`, marker); // Debugging line to ensure all markers are added
+      console.log(`Adding marker ${index + 1}:`, marker);
 
       // Create a custom marker element
       const el = document.createElement("div");

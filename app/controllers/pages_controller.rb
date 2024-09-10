@@ -4,14 +4,7 @@ class PagesController < ApplicationController
   # Home action for initial page load
   def home
     @books = Book.all
-    # if current_user
-    #   @twenty_four_recommendations = random_book
-    #   @three_recommendations_pro_click = @twenty_four_recommendations.sample(6)
-    # else
-    #   @three_recommendations_pro_click = []
-    # end
   end
-
 
   def generate_book_description(title, author, genre)
     character = Faker::Fantasy::Tolkien.character
@@ -48,7 +41,7 @@ class PagesController < ApplicationController
     if current_user
       @twenty_four_recommendations = random_book
 
-      @three_recommendations_pro_click = @twenty_four_recommendations.sample(6)
+      puts @twenty_four_recommendations
     else
       @three_recommendations_pro_click = []
     end
@@ -138,16 +131,15 @@ class PagesController < ApplicationController
           @books_for_carousel << book
           else
             book = Book.find_by(title: book_title, author: book_author)
-            @books_for_carousel << book
+            @books_for_carousel << book     
           end
         end
       end
     end
-
-
     # Return the array of book objects
     @books_for_carousel
   end
+
 
   # The method that generates recommendations based on the user's read books
   def random_book
@@ -223,7 +215,7 @@ class PagesController < ApplicationController
 
           cover_image_url = earliest_book['volumeInfo']['imageLinks']&.dig('thumbnail')
           if cover_image_url
-
+            
             # Create only if not already exists
             unless Book.exists?(title: book_title, author: book_author)
               book = Book.create!(
@@ -270,56 +262,56 @@ class PagesController < ApplicationController
     end
 
 
-  private
+    private
 
-  # Method to split the response from AI into arrays of titles and authors
-  def split_array_text(text)
-    sections = text.split(/\*\*Array \d: Titles\*\*|\*\*Array \d: Authors\*\*/).map(&:strip)
-
-    titles = sections[1].to_s.split("\n").reject(&:empty?).map(&:strip)
-    authors = sections[2].to_s.split("\n").reject(&:empty?).map(&:strip)
-
-    [titles, authors]
-  end
-
-  # Method to fetch books using the Google Books API
-  def get_books(query, author = nil)
-    encoded_query = URI.encode_www_form_component(query)
-    encoded_author = URI.encode_www_form_component(author) if author
-
-    url = if author.nil?
-            "https://www.googleapis.com/books/v1/volumes?q=#{encoded_query}&key=#{ENV['API_KEY']}&langRestrict=en"
-          else
-            "https://www.googleapis.com/books/v1/volumes?q=#{encoded_query}+inauthor:#{encoded_author}&key=#{ENV['API_KEY']}&langRestrict=en"
-          end
-
-    response = HTTParty.get(url)
-    return [] unless response.success?
-
-    response.parsed_response['items'] || []
-  end
-
-  # Method to generate book recommendations using AI
-  def generate_book_recommendations(text)
-    body = {
-      contents: [
-        {
-          role: "user",
-          parts: [{ text: text }]
-        }
-      ]
-    }
-
-    response = HTTParty.post(
-      "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=#{ENV['AI_API_KEY']}",
-      headers: { 'Content-Type' => 'application/json' },
-      body: body.to_json
-    )
-
-    if response.success?
-      result = JSON.parse(response.body)
-      result["candidates"].first.dig("content", "parts", 0, "text")
-    else
-      "Error: #{response.code}"
+    # Method to split the response from AI into arrays of titles and authors
+    def split_array_text(text)
+      sections = text.split(/\*\*Array \d: Titles\*\*|\*\*Array \d: Authors\*\*/).map(&:strip)
+  
+      titles = sections[1].to_s.split("\n").reject(&:empty?).map(&:strip)
+      authors = sections[2].to_s.split("\n").reject(&:empty?).map(&:strip)
+  
+      [titles, authors]
     end
-  end
+  
+    # Method to fetch books using the Google Books API
+    def get_books(query, author = nil)
+      encoded_query = URI.encode_www_form_component(query)
+      encoded_author = URI.encode_www_form_component(author) if author
+  
+      url = if author.nil?
+              "https://www.googleapis.com/books/v1/volumes?q=#{encoded_query}&key=#{ENV['API_KEY']}&langRestrict=en"
+            else
+              "https://www.googleapis.com/books/v1/volumes?q=#{encoded_query}+inauthor:#{encoded_author}&key=#{ENV['API_KEY']}&langRestrict=en"
+            end
+  
+      response = HTTParty.get(url)
+      return [] unless response.success?
+  
+      response.parsed_response['items'] || []
+    end
+  
+    # Method to generate book recommendations using AI
+    def generate_book_recommendations(text)
+      body = {
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: text }]
+          }
+        ]
+      }
+  
+      response = HTTParty.post(
+        "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=#{ENV['AI_API_KEY']}",
+        headers: { 'Content-Type' => 'application/json' },
+        body: body.to_json
+      )
+  
+      if response.success?
+        result = JSON.parse(response.body)
+        result["candidates"].first.dig("content", "parts", 0, "text")
+      else
+        "Error: #{response.code}"
+      end
+    end
