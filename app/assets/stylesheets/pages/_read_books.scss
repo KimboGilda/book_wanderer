@@ -35,13 +35,13 @@
   }
 }
 
-.button-group {
+.button--group {
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
 
   .icon-wrapper, .icon {
-    color: #708090;
+    color: #90a4b7;
     font-size: 20px;
     transition: color 0.3s;
   }

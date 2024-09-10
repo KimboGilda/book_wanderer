@@ -47,7 +47,7 @@
           <% end %>
         <% else %>
           <%= link_to book_path(book) do%>
-          <%= image_tag 'https://salonlfc.com/image-not-found-2/', alt: 'No cover available', class: "book-image" %> 
+          <%= image_tag 'https://salonlfc.com/image-not-found-2/', alt: 'No cover available', class: "book-image" %>
           <% end %>
         <% end %>
         <h5 class="book-title"><%= book.title %></h5>
@@ -60,9 +60,8 @@
   <div class="text-center py-5">
     <div class="button-box">
       <button type="button" class="toggle-btn me-2" data-action="click->book-carousel#fetchRandomBooks">Random</button>
-      <button type="button" class="toggle-btn me-2" onclick="rightClick()">Our Selection</button>
+      <button type="button" class="toggle-btn me-2" data-action="click->book-carousel#fetchOurSelectionBooks">Our Selection</button>
       <button type="button" class="toggle-btn" onclick="centerClick()">Seasons</button>
     </div>
   </div>
 </div>
-

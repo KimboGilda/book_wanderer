@@ -1,0 +1,7 @@
+<div class="review" style="padding: 10px; border: 1px solid #ddd; border-radius: 10px; background-color: #fff; margin-bottom: 10px;">
+  <p><%= review.content %></p>
+  <small>
+    Reviewed by: <%= review.read_book.user.email %> <!-- Assuming you want to display the user's email -->
+    on <%= review.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+  </small>
+</div>
