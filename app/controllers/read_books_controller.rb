@@ -21,13 +21,13 @@ class ReadBooksController < ApplicationController
   end
 
   def destroy
-
     @book = Book.find(params[:id])
-
-    @read_books = ReadBook.find_by(book_id: params[:id], user_id: current_user.id)
-    @read_books.destroy
-
-    @availability = 'available'
-    redirect_to read_books_path, notice: 'Book removed from your library.'
+    @read_book = ReadBook.find_by(book_id: params[:id], user_id: current_user.id)
+    if @read_book.destroy
+    #@availability = 'available'
+      redirect_to read_books_path, status: :see_other, notice: 'Book removed from your library.'
+    else
+      redirect_to read_books_path, notice: 'Failed to remove book from your library.'
+    end
   end
 end

@@ -23,7 +23,8 @@
 
           <div class="button--group">
             <%= link_to content_tag(:i, "", class: "fa-solid fa-xmark icon"),
-              user_library_path(book.id), method: :delete, data: { confirm: 'Are you sure?' },
+              read_book_path(book),
+              data: { turbo_method: :delete },
               style: "color:#708090; font-size: 16px; margin-left: 20px;",
               class: 'icon-wrapper'
             %>
