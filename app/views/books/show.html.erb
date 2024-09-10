@@ -3,7 +3,7 @@
     <div class="upper-container">
       <%# Book Cover and buttons(e.g nearby button) %>
       <div class="left-upper-container">
-      
+
         <%# Book Cover %>
         <div class="book-cover">
           <%# Check if @book.cover_image_url is NIL  %>
@@ -13,7 +13,7 @@
           <p>No such file</p>
         <% end %>
         </div>
-        
+
         <%# Additional Content Below Book Cover %>
         <div class="extra-content">
           <%# Check if Book already in Library %>
@@ -49,7 +49,7 @@
         <p class="text-wrap"><%= @book.summary %></p>
       </div>
     </div>
-    
+
     <div class="map-container" data-bookstores-target="map">
       <div style="width: 100%; height: 600px;"
       data-controller="map"

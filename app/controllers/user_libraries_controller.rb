@@ -13,7 +13,7 @@ class UserLibrariesController < ApplicationController
     )
     new_book.save
     @availability = false
-    redirect_to book_path(@book), notice: 'Book added to your library.'
+    redirect_to book_path(@book), flash: { book: 'Book added to your library.' }
   end
 
   def destroy
@@ -24,6 +24,6 @@ class UserLibrariesController < ApplicationController
     @user_library.destroy
 
     @availability = true
-    redirect_to book_path(@book), notice: 'Book removed from your library.'
+    redirect_to book_path(@book), flash: { book: 'Book removed from your library.' }
   end
 end
