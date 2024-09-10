@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "pages#home"
   get 'random_books', to: 'pages#random_books', defaults: { format: :json }
+  get 'our_selection', to: 'pages#our_selection', defaults: { format: :json }
 
   get "up" => "rails/health#show", as: :rails_health_check
 
@@ -11,6 +12,7 @@ Rails.application.routes.draw do
   get 'books_for_carousel', to: 'pages#load_user_content'
 
   resources :books do
+    resources :reviews, only: [:create]
     resources :user_libraries, only: [:create, :destroy]
     resources :read_books, only: [:destroy, :create]
   end

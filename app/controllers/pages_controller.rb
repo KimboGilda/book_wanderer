@@ -1,158 +1,120 @@
-require 'httparty'
-require 'uri'
-
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [ :home ]
+  skip_before_action :authenticate_user!, only: [:home, :random_books]
 
+  # Home action for initial page load
   def home
     @books = Book.all
+    # if current_user
+    #   @twenty_four_recommendations = random_book
+    #   @three_recommendations_pro_click = @twenty_four_recommendations.sample(6)
+    # else
+    #   @three_recommendations_pro_click = []
+    # end
+
+    # espond_to do |format|
+    #   format.json do
+    #     render json: {
+    #       books_html: render_to_string(partial: "books/book", collection: @three_recommendations_pro_click, as: :book, formats: [:html])
+    #     }, status: :ok
+    #   end
+    # end
+  end
+
+  # Action for fetching random books when clicking the "Random Book" button
+  def random_books
+    @random_books = Book.order("RANDOM()").limit(6)
+
+    respond_to do |format|
+      format.json do
+        render json: {
+          books_html: render_to_string(partial: "books/book", collection: @random_books, as: :book, formats: [:html])
+        }, status: :ok
+      end
+    end
+  end
+
+  # Action for fetching personalized recommendations when clicking the "Our Collection" button
+  def our_selection
     if current_user
       @twenty_four_recommendations = random_book
-
       @three_recommendations_pro_click = @twenty_four_recommendations.sample(6)
     else
       @three_recommendations_pro_click = []
     end
-  end
 
-  def random_book
-    if current_user
-
-        # Get all read books for current user
-        @read = ReadBook.where(user_id: current_user.id)
-        book_ids = @read.pluck(:book_id) # list of ids
-        @user_books = Book.where(id: book_ids)
-        book_titles = @user_books.pluck(:title)
-        @book_titles_str = book_titles.join(', ')
-
-        # Create text body for request
-        @text = "Please provide two arrays:
-                Array 1: Titles — this array should contain 10 famous or classic book titles that are influenced by the books I have read: #{@book_titles_str}.
-                Array 2: Authors — this array should contain only the last names of the authors of the books from the first array. Response please like **Array 1: Titles**.....**Array 2: Authors** and all titles and last names should be in English and contain only titles or authors?"
-
-        # Call AI to generate recommendations
-        @random_rec = generate_book_recommendations(@text)
-
-        if @random_rec
-          books_array = @random_rec.split("\n").map { |book| book.gsub(/(^\d+\.\s*|-)*/, '') }
-          text = books_array.join("\n")
-          titles, authors = split_array_text(text)
-        else
-          @results = "Don't have recommendations."
-          return []
-        end
-
-        # Initialize carousel array
-        @books_for_carousel = []
-
-        # Combine titles and authors into pairs
-        books_and_authors = titles.zip(authors)
-
-        # Process each title-author pair
-        books_and_authors.each do |title, author|
-          search_results = get_books(title, author)
-
-          # Find the earliest book (considering missing publication dates)
-          earliest_book = search_results.min_by do |book|
-            published_date = book['volumeInfo'].dig('publishedDate')
-            published_year = published_date&.split('-')&.first.to_i || Float::INFINITY
-          end
-
-          next if earliest_book.nil? # Skip if no valid book is found
-
-          # Extract book information
-          book_title = earliest_book['volumeInfo']['title'] || title
-          book_author = earliest_book['volumeInfo']['authors']&.join(', ') || author
-          summary = earliest_book['volumeInfo']['description'] || Faker::Lorem.paragraphs(number: 2).join("\n")
-          publication_year = earliest_book['volumeInfo'].dig('publishedDate')&.split('-')&.first
-          genre = earliest_book['volumeInfo']['categories']&.join(', ') || Faker::Book.genre
-          cover_image_url = earliest_book['volumeInfo']['imageLinks']&.dig('thumbnail')
-          if cover_image_url
-
-            # Create only if not already exists
-            unless Book.exists?(title: book_title, author: book_author)
-              book = Book.create!(
-                title: book_title,
-                author: book_author,
-                publication_year: publication_year,
-                summary: summary,
-                short_summary: summary,
-                genre: genre,
-                cover_image_url: cover_image_url
-              )
-
-              # Add to the carousel array
-
-              @books_for_carousel << book
-            else
-              book = Book.find_by(title: book_title, author: book_author)
-              @books_for_carousel << book
-            end
-          
-          end
-        end
-
-
-  end
-
-  # Return the array of book objects
-  @books_for_carousel
-end
-
-  private
-
-  def split_array_text(text)
-    # Split the text into sections by delimiters
-    sections = text.split(/\*\*Array \d: Titles\*\*|\*\*Array \d: Authors\*\*/).map(&:strip)
-
-    # Process sections
-    titles_section = sections[1].downcase
-    authors_section = sections[2].downcase
-
-    # Convert sections to arrays of strings, removing empty lines
-    titles = titles_section.to_s.split("\n").reject(&:empty?).map(&:strip)
-    authors = authors_section.to_s.split("\n").reject(&:empty?).map(&:strip)
-
-    [titles, authors]
-  end
-
-  def get_books(query, author = nil)
-    # request to books api for info
-    encoded_query = URI.encode_www_form_component(query)
-    encoded_author = URI.encode_www_form_component(author) if author
-
-    if author.nil?
-      url = "https://www.googleapis.com/books/v1/volumes?q=#{encoded_query}&key=#{ENV['API_KEY']}&langRestrict=en"
-    else
-      url = "https://www.googleapis.com/books/v1/volumes?q=#{encoded_query}+inauthor:#{encoded_author}&key=#{ENV['API_KEY']}&langRestrict=en"
+    respond_to do |format|
+      format.json do
+        render json: {
+          books_html: render_to_string(partial: "books/book", collection: @three_recommendations_pro_click, as: :book, formats: [:html])
+        }, status: :ok
+      end
     end
-    response = HTTParty.get(url)
-    if response.success?
-      items = response.parsed_response['items']
-      items.nil? ? [] : items
+  end
+
+  # The method that generates recommendations based on the user's read books
+  def random_book
+    return [] unless current_user
+
+    # Get the read books for the current user
+    @read = ReadBook.where(user_id: current_user.id)
+    book_ids = @read.pluck(:book_id)
+    @user_books = Book.where(id: book_ids)
+    book_titles = @user_books.pluck(:title)
+    @book_titles_str = book_titles.join(', ')
+
+    # Generate recommendations using an AI model
+    @text = "Please provide two arrays: Array 1: 10 book titles influenced by: #{@book_titles_str}. Array 2: Authors."
+    @random_rec = generate_book_recommendations(@text)
+
+    if @random_rec
+      titles, authors = split_array_text(@random_rec)
+
+      Rails.logger.info("Recommended Titles: #{titles.inspect}")
+      Rails.logger.info("Recommended Authors: #{authors.inspect}")
+
+      books_and_authors = titles.zip(authors)
+
+      # Fetch books based on recommendations
+      books_and_authors.map do |title, author|
+        search_results = get_books(title, author)
+        search_results.first # Return the first result found for each title-author pair
+      end.compact
     else
       []
     end
   end
 
-
-  # method for getting random recommendations after clicking on the random btn
-  def random_books
-    @random_books = Book.order("RANDOM()").limit(6)
-
-    respond_to do |format|
-      format.json {
-        render json: {
-          books_html: render_to_string(partial: "books/book", collection: @random_books, as: :book, formats: [:html])
-        }, status: :ok
-      }
-    end
-  end
-
   private
 
+  # Method to split the response from AI into arrays of titles and authors
+  def split_array_text(text)
+    sections = text.split(/\*\*Array \d: Titles\*\*|\*\*Array \d: Authors\*\*/).map(&:strip)
+
+    titles = sections[1].to_s.split("\n").reject(&:empty?).map(&:strip)
+    authors = sections[2].to_s.split("\n").reject(&:empty?).map(&:strip)
+
+    [titles, authors]
+  end
+
+  # Method to fetch books using the Google Books API
+  def get_books(query, author = nil)
+    encoded_query = URI.encode_www_form_component(query)
+    encoded_author = URI.encode_www_form_component(author) if author
+
+    url = if author.nil?
+            "https://www.googleapis.com/books/v1/volumes?q=#{encoded_query}&key=#{ENV['API_KEY']}&langRestrict=en"
+          else
+            "https://www.googleapis.com/books/v1/volumes?q=#{encoded_query}+inauthor:#{encoded_author}&key=#{ENV['API_KEY']}&langRestrict=en"
+          end
+
+    response = HTTParty.get(url)
+    return [] unless response.success?
+
+    response.parsed_response['items'] || []
+  end
+
+  # Method to generate book recommendations using AI
   def generate_book_recommendations(text)
-    # query
     body = {
       contents: [
         {
@@ -170,11 +132,9 @@ end
 
     if response.success?
       result = JSON.parse(response.body)
-      @recommendations = result["candidates"].first.dig("content", "parts", 0, "text")
-      return @recommendations
+      result["candidates"].first.dig("content", "parts", 0, "text")
     else
-      @recommendations = "Error: #{response.code}"
-      return nil
+      "Error: #{response.code}"
     end
   end
 end

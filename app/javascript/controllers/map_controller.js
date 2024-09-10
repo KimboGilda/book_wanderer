@@ -8,18 +8,20 @@ export default class extends Controller {
   };
 
   connect() {
+    const markers = JSON.parse(this.element.dataset.mapMarkersValue); // Manually parse the data attribute
+    console.log(markers);
+    console.log("map controller OK");
     mapboxgl.accessToken = this.apiKeyValue;
-    
+
     this.map = new mapboxgl.Map({
       container: this.element,
       style: "mapbox://styles/mapbox/streets-v10",
       zoom: 12,
       center: [23.733991, 37.981981] // Adjust center based on markers
     });
-    console.log("check it");
 
-    //this.#addMarkersToMap();
-    //this.#fitMapToMarkers();
+    this.#addMarkersToMap();
+    this.#fitMapToMarkers();
   }
 
   #addMarkersToMap() {
