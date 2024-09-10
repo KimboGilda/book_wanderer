@@ -66,7 +66,7 @@
 .book-details h2 {
   font-size: 1.8rem;
   font-weight: bold;
-  color: #6a9c89;
+  color: #295F98;
 }
 
 .book-details p {
@@ -128,13 +128,13 @@
 
 .related-book-details a {
   font-weight: bold;
-  color: #6a9c89;
+  color: #295F98;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .related-book-details a:hover {
-  color: #3e6757;
+  color: #295F98;
 }
 
 .related-book-details p {
