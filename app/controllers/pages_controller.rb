@@ -235,4 +235,4 @@ class PagesController < ApplicationController
       "Error: #{response.code}"
     end
   end
-end
+
