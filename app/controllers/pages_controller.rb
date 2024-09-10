@@ -228,7 +228,7 @@ class PagesController < ApplicationController
             end
           end
         end
-      
+
     end
 
     # Return the array of book objects
