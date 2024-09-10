@@ -38,6 +38,9 @@ export default class extends Controller {
       const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(`
         <h3>${marker.name}</h3>
         <p>${marker.address}</p>
+        <p style="color: ${marker.availability ? "green" : "red"};">
+        ${marker.availability ? "Available" : "Unavailable"}
+        </p>
       `);
 
       // Add the marker and bind the popup to it
