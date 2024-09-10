@@ -47,7 +47,7 @@ class PagesController < ApplicationController
   def our_selection
     if current_user
       @twenty_four_recommendations = random_book
-      puts @twenty_four_recommendations
+
       @three_recommendations_pro_click = @twenty_four_recommendations.sample(6)
     else
       @three_recommendations_pro_click = []
@@ -93,74 +93,57 @@ class PagesController < ApplicationController
 
     @books_for_carousel = []
 
-      # Combine titles and authors into pairs
-      books_and_authors = titles.zip(authors)
+    # Combine titles and authors into pairs
+    books_and_authors = titles.zip(authors)
 
-      # Process each title-author pair
-      books_and_authors.each do |title, author|
-        search_results = get_books(title, author)
+    # Process each title-author pair
+    books_and_authors.each do |title, author|
+      search_results = get_books(title, author)
 
-        # Find the earliest book (considering missing publication dates)
-        earliest_book = search_results.min_by do |book|
-          published_date = book['volumeInfo'].dig('publishedDate')
-          published_year = published_date&.split('-')&.first.to_i || Float::INFINITY
-        end
+      # Find the earliest book (considering missing publication dates)
+      earliest_book = search_results.min_by do |book|
+        published_date = book['volumeInfo'].dig('publishedDate')
+        published_year = published_date&.split('-')&.first.to_i || Float::INFINITY
+      end
 
-        # Initialize carousel array
-        @books_for_carousel = []
-
-        # Combine titles and authors into pairs
-        books_and_authors = titles.zip(authors)
-
-        # Process each title-author pair
-        books_and_authors.each do |title, author|
-          search_results = get_books(title, author)
-
-          # Find the earliest book (considering missing publication dates)
-          earliest_book = search_results.min_by do |book|
-            published_date = book['volumeInfo'].dig('publishedDate')
-            published_year = published_date&.split('-')&.first.to_i || Float::INFINITY
-          end
-
-          next if earliest_book.nil? # Skip if no valid book is found
+      next if earliest_book.nil? # Skip if no valid book is found
 
           # Extract book information
-          book_title = earliest_book['volumeInfo']['title'] || title
-          book_author = earliest_book['volumeInfo']['authors']&.join(', ') || author
-          first_summary = earliest_book['volumeInfo']['description']
-          genre = earliest_book['volumeInfo']['categories']&.join(', ') || Faker::Book.genre
-          if first_summary.nil? || first_summary.length < 50
-            first_summary =  generate_book_description(title, author, genre)
-          end
-          summary = first_summary.truncate(500, separator: ' ', omission: '...')
-          publication_year = earliest_book['volumeInfo'].dig('publishedDate')&.split('-')&.first
+      book_title = earliest_book['volumeInfo']['title'] || title
+      book_author = earliest_book['volumeInfo']['authors']&.join(', ') || author
+      first_summary = earliest_book['volumeInfo']['description']
+      genre = earliest_book['volumeInfo']['categories']&.join(', ') || Faker::Book.genre
+      if first_summary.nil? || first_summary.length < 50
+        first_summary =  generate_book_description(title, author, genre)
+      end
+      summary = first_summary.truncate(500, separator: ' ', omission: '...')
+      publication_year = earliest_book['volumeInfo'].dig('publishedDate')&.split('-')&.first
 
-          cover_image_url = earliest_book['volumeInfo']['imageLinks']&.dig('thumbnail')
-          if cover_image_url
+      cover_image_url = earliest_book['volumeInfo']['imageLinks']&.dig('thumbnail')
+      if cover_image_url
+        # Create only if not already exists
+        unless Book.exists?(title: book_title, author: book_author)
+          book = Book.create!(
+            title: book_title,
+            author: book_author,
+            publication_year: publication_year,
+            summary: summary,
+            short_summary: summary,
+            genre: genre,
+            cover_image_url: cover_image_url
+          )
 
-            # Create only if not already exists
-            unless Book.exists?(title: book_title, author: book_author)
-              book = Book.create!(
-                title: book_title,
-                author: book_author,
-                publication_year: publication_year,
-                summary: summary,
-                short_summary: summary,
-                genre: genre,
-                cover_image_url: cover_image_url
-              )
+          # Add to the carousel array
 
-              # Add to the carousel array
-
-              @books_for_carousel << book
-            else
-              book = Book.find_by(title: book_title, author: book_author)
-              @books_for_carousel << book
-            end
+          @books_for_carousel << book
+          else
+            book = Book.find_by(title: book_title, author: book_author)
+            @books_for_carousel << book
           end
         end
       end
     end
+
 
     # Return the array of book objects
     @books_for_carousel
