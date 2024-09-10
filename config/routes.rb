@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-
+  post 'start_recommendation', to: 'pages#start_recommendation'
   get 'books_for_carousel', to: 'pages#load_user_content'
 
   resources :books do
