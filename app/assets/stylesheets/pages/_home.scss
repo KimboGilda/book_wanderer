@@ -20,15 +20,15 @@
   }
 
   .btn-primary {
-    background-color: #629e65;
-    border: none;
+    background-color: #295F98;
+    border-radius: 20px;
     padding: 12px 25px;
     font-size: 1.2rem;
     text-transform: uppercase;
     transition: background-color 0.3s ease;
 
     &:hover {
-      background-color: darken(#7db995, 10%);
+      background-color: #1E3A68;
     }
   }
 }
@@ -51,7 +51,7 @@
     }
 
     i {
-      color: #629e65;
+      color: #295F98;
       margin-bottom: 15px;
     }
 
@@ -124,7 +124,7 @@
 .toggle-btn {
   padding: 0.5rem 2rem;
   cursor: pointer;
-  background: #629e65;
+  background: #295F98;
   color: white;
   font-family: "Poppins", sans-serif;
   border-radius: 20px;
@@ -141,7 +141,7 @@
 
   &:hover {
     transform: scale(1.05);
-    background-color: #7db995;
+    background-color: #1E3A68;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
   }
 }

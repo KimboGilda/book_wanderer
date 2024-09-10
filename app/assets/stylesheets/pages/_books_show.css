@@ -155,15 +155,6 @@
 }
 
 /* -------------- Buttons -------------- */
-.extra-content {
-  flex: 1;
-  text-align: center;
-  padding-top: 0.5rem;
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
 .extra-content .btn,
 button.btn-secondary,
 button.btn-dark {
@@ -183,30 +174,46 @@ button.btn-dark {
 }
 
 button.btn-secondary {
-  background-color: #629e65;
+  background-color: #1E3A68;
 
   &:hover {
-    background-color: #4e8651;
+    background-color: #163259;
   }
 }
 
 button.btn-dark {
-  background-color: #2a572c;
+  background-color: #295F98;
 
   &:hover {
-    background-color: #1a311b;
+    background-color: #1F4A7B;
   }
+}
+
+button.btn-light {
+  background-color: #6A9DD4;
+
+  &:hover {
+    background-color: #5A8CC0;
+  }
+}
+
+.extra-content .btn[data-turbo-method="post"] {
+  background-color: #295F98;
+}
+
+.extra-content .btn[data-turbo-method="delete"] {
+  background-color: #1E3A68;
 }
 
 .extra-content .btn:hover,
 button.btn-secondary:hover,
-button.btn-dark:hover {
-  background-color: #7db995;
+button.btn-dark:hover,
+button.btn-light:hover {
+  background-color: #4F6B99;
   color: white;
 }
 
-
-/* Map related elements */
+/* -------------- Map related elements -------------- */
 
 .map-container {
   pointer-events: none;
@@ -225,7 +232,7 @@ button.btn-dark:hover {
   color: rgb(200, 87, 87);
 }
 
-/* review related elements */
+/* -------------- review related elements -------------- */
 .reviews {
   /* max-width: 600px; */
   display: flex;
@@ -264,38 +271,4 @@ button.btn-dark:hover {
 
 .reviews .review-item + .review-item {
   margin-top: 1rem;
-}
-
-.button-review-toggle {
-  background-color: #389568;
-  color: #fff;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
-  margin-left: 2rem;
-}
-
-.button-review-toggle:hover {
-  background-color: #4caf50;
-  opacity: 0.8;
-}
-
-.submit-form {
-  color: white;
-  background-color: #296a98;
-  border: none;
-  margin-left: 2rem;
-  padding: 10px 15px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
-}
-
-.submit-form:hover {
-  background-color: #3581b8;
-  opacity: 0.8;
 }
