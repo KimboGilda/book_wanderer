@@ -1,6 +1,6 @@
 class BookstoresController < ApplicationController
     def index
-        @bookstores = Bookstore.geocoded
+        @bookstores = Bookstore.all
         # The `geocoded` scope filters only flats with coordinates
         # Build the markers array
         @markers = @bookstores.map do |bookstore|
@@ -10,6 +10,6 @@ class BookstoresController < ApplicationController
           lat: bookstore.latitude,
           lng: bookstore.longitude
         }
-      end
     end
   end
+end

@@ -31,7 +31,7 @@
 }
 
 .book-cover {
-  flex: 2;
+  flex: 1.5;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,24 +51,6 @@
   flex: 1;
   text-align: center;
   padding-top: 0.5rem;
-}
-
-.extra-content button,
-.extra-content .btn {
-  margin-top: 0.5rem;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.extra-content .btn {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.extra-content .btn:hover {
-  background-color: #4caf50; /* Change color on hover */
-  color: white;
 }
 
 .book-details {
@@ -172,24 +154,57 @@
   color: #6c757d;
 }
 
-/* Buttons */
-button.btn-secondary {
-  background-color: #6c757d;
-  color: white;
+/* -------------- Buttons -------------- */
+.extra-content {
+  flex: 1;
+  text-align: center;
+  padding-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
 }
 
-button.btn-secondary:hover {
-  background-color: #5a6268;
+.extra-content .btn,
+button.btn-secondary,
+button.btn-dark {
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+  display: inline-block;
+  flex: 1;
+  max-width: 150px;
+  transition: background-color 0.3s ease;
+  color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+button.btn-secondary {
+  background-color: #629e65;
+
+  &:hover {
+    background-color: #4e8651;
+  }
 }
 
 button.btn-dark {
-  background-color: #343a40;
+  background-color: #2a572c;
+
+  &:hover {
+    background-color: #1a311b;
+  }
+}
+
+.extra-content .btn:hover,
+button.btn-secondary:hover,
+button.btn-dark:hover {
+  background-color: #7db995;
   color: white;
 }
 
-button.btn-dark:hover {
-  background-color: #23272b;
-}
 
 /* Map related elements */
 
@@ -204,6 +219,7 @@ button.btn-dark:hover {
   margin-left: 1rem;
 }
 
+
 .custom-marker {
   font-size: 30px;
   color: rgb(200, 87, 87);
@@ -216,6 +232,7 @@ button.btn-dark:hover {
   flex-direction: column;
   align-items: left;
   margin-top: 2rem;
+  margin-left: 2rem;
   padding: 1.5rem;
   background-color: #f8f9fa;
   border-radius: 8px;
@@ -258,6 +275,7 @@ button.btn-dark:hover {
   font-size: 16px;
   font-weight: 500;
   transition: background-color 0.3s ease;
+  margin-left: 2rem;
 }
 
 .button-review-toggle:hover {
@@ -269,6 +287,7 @@ button.btn-dark:hover {
   color: white;
   background-color: #296a98;
   border: none;
+  margin-left: 2rem;
   padding: 10px 15px;
   border-radius: 8px;
   font-size: 16px;

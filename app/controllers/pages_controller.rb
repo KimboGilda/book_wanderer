@@ -1,9 +1,7 @@
-require 'httparty'
-require 'uri'
-
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:home]
+  skip_before_action :authenticate_user!, only: [:home, :random_books]
 
+  # Home action for initial page load
   def home
     @books = Book.all
     # if current_user
@@ -31,6 +29,39 @@ class PagesController < ApplicationController
     description.strip
   end
 
+
+  # Action for fetching random books when clicking the "Random Book" button
+  def random_books
+    @random_books = Book.order("RANDOM()").limit(6)
+
+    respond_to do |format|
+      format.json do
+        render json: {
+          books_html: render_to_string(partial: "books/book", collection: @random_books, as: :book, formats: [:html])
+        }, status: :ok
+      end
+    end
+  end
+
+  # Action for fetching personalized recommendations when clicking the "Our Collection" button
+  def our_selection
+    if current_user
+      @twenty_four_recommendations = random_book
+      @three_recommendations_pro_click = @twenty_four_recommendations.sample(6)
+    else
+      @three_recommendations_pro_click = []
+    end
+
+    respond_to do |format|
+      format.json do
+        render json: {
+          books_html: render_to_string(partial: "books/book", collection: @three_recommendations_pro_click, as: :book, formats: [:html])
+        }, status: :ok
+      end
+    end
+  end
+
+  # The method that generates recommendations based on the user's read books
   def random_book
     if current_user
       # Get all read books for the current user
@@ -133,38 +164,38 @@ class PagesController < ApplicationController
     @books_for_carousel
   end
 
-  # Method for getting random recommendations after clicking on the random button
-  def random_books
-    @random_books = Book.order("RANDOM()").limit(6)
+    if @random_rec
+      titles, authors = split_array_text(@random_rec)
 
-    respond_to do |format|
-      format.json do
-        render json: {
-          books_html: render_to_string(partial: "books/book", collection: @random_books, as: :book, formats: [:html])
-        }, status: :ok
-      end
+      Rails.logger.info("Recommended Titles: #{titles.inspect}")
+      Rails.logger.info("Recommended Authors: #{authors.inspect}")
+
+      books_and_authors = titles.zip(authors)
+
+      # Fetch books based on recommendations
+      books_and_authors.map do |title, author|
+        search_results = get_books(title, author)
+        search_results.first # Return the first result found for each title-author pair
+      end.compact
+    else
+      []
     end
   end
 
-private
+  private
 
+  # Method to split the response from AI into arrays of titles and authors
   def split_array_text(text)
-    # Split the text into sections by delimiters
     sections = text.split(/\*\*Array \d: Titles\*\*|\*\*Array \d: Authors\*\*/).map(&:strip)
 
-    # Process sections
-    titles_section = sections[1]
-    authors_section = sections[2]
-
-    # Convert sections to arrays of strings, removing empty lines
-    titles = titles_section.to_s.split("\n").reject(&:empty?).map(&:strip)
-    authors = authors_section.to_s.split("\n").reject(&:empty?).map(&:strip)
+    titles = sections[1].to_s.split("\n").reject(&:empty?).map(&:strip)
+    authors = sections[2].to_s.split("\n").reject(&:empty?).map(&:strip)
 
     [titles, authors]
   end
 
+  # Method to fetch books using the Google Books API
   def get_books(query, author = nil)
-    # Request to books API for info
     encoded_query = URI.encode_www_form_component(query)
     encoded_author = URI.encode_www_form_component(author) if author
 
@@ -175,16 +206,13 @@ private
           end
 
     response = HTTParty.get(url)
-    if response.success?
-      items = response.parsed_response['items']
-      items.nil? ? [] : items
-    else
-      []
-    end
+    return [] unless response.success?
+
+    response.parsed_response['items'] || []
   end
 
+  # Method to generate book recommendations using AI
   def generate_book_recommendations(text)
-    # Request body
     body = {
       contents: [
         {
@@ -202,11 +230,9 @@ private
 
     if response.success?
       result = JSON.parse(response.body)
-      @recommendations = result["candidates"].first.dig("content", "parts", 0, "text")
-      return @recommendations
+      result["candidates"].first.dig("content", "parts", 0, "text")
     else
-      @recommendations = "Error: #{response.code}"
-      return nil
+      "Error: #{response.code}"
     end
   end
 end

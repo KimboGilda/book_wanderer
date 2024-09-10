@@ -35,18 +35,16 @@
   }
 }
 
-.button-group {
+.button--group {
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
-
   .icon-wrapper, .icon {
-    color: #8ea2b6;
+    color: #629e65;
     font-size: 20px;
     transition: color 0.3s;
   }
-
   .icon:hover {
-    color: #4c6278;
+    color: #93cba9;
   }
 }

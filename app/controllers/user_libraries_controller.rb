@@ -12,15 +12,15 @@ class UserLibrariesController < ApplicationController
       user_id: current_user.id
     )
     new_book.save
-    @availability = 'library'
-    redirect_to book_path(@book), notice: 'Book added to your library.'
+    @availability = false
+    redirect_to book_path(@book), flash: { book: 'Book added to your library.' }
   end
 
   def destroy
     @book = Book.find(params[:id])
     @user_library = UserLibrary.find_by(book_id: params[:id], user_id: current_user.id)
     @user_library.destroy
-    @availability = 'available'
-    redirect_to user_libraries_path, notice: 'Book removed from your library.'
+    @availability = true
+    redirect_to book_path(@book), flash: { book: 'Book removed from your library.' }
   end
 end
