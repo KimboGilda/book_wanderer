@@ -9,8 +9,13 @@
     width: 180px;
 
     .navbar-logo {
-      width: 40px;
+      width: 170px;
       margin-right: 10px;
+    }
+
+    &:hover {
+      color: #0a8888;
+      transform: scale(1.1);
     }
   }
 
