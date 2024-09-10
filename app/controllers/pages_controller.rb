@@ -4,12 +4,7 @@ class PagesController < ApplicationController
   # Home action for initial page load
   def home
     @books = Book.all
-    # if current_user
-    #   @twenty_four_recommendations = random_book
-    #   @three_recommendations_pro_click = @twenty_four_recommendations.sample(6)
-    # else
-    #   @three_recommendations_pro_click = []
-    # end
+
   end
 
 
@@ -48,7 +43,7 @@ class PagesController < ApplicationController
     if current_user
 
 
-      @three_recommendations_pro_click = current_user.recommended_books
+      @three_recommendations_pro_click = current_user.recommended_books.sample(6)
 
       # twenty_four_recommendations
       # @three_recommendations_pro_click = @twenty_four_recommendations.sample(6)

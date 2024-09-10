@@ -64,7 +64,6 @@ class RecommendationJob < ApplicationJob
 
           cover_image_url = earliest_book['volumeInfo']['imageLinks']&.dig('thumbnail')
           if cover_image_url
-
             # Create only if not already exists
             unless Book.exists?(title: book_title, author: book_author)
               book = Book.create!(
@@ -76,14 +75,12 @@ class RecommendationJob < ApplicationJob
                 genre: genre,
                 cover_image_url: cover_image_url
               )
-              Recommendation.create(
-                user: user,
-                book: book
-              )
-              # Add to the carousel array
-
             else
               book = Book.find_by(title: book_title, author: book_author)
+            end
+
+            # Check if the recommendation exists for the user and book
+            unless Recommendation.exists?(user: user, book: book)
               Recommendation.create(
                 user: user,
                 book: book
