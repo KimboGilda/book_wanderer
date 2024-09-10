@@ -302,7 +302,7 @@ button.btn-dark:hover {
 }
 
 .focus-button:hover {
-  background-color: #fa9c9c;
+  background-color: #a34242;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
   transform: translateY(-2px);
 }
