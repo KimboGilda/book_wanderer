@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
-import mapboxgl from "mapbox-gl"; // Don't forget this!
+import mapboxgl from "mapbox-gl"; // Import Mapbox
 
 export default class extends Controller {
   static values = {
@@ -22,8 +22,10 @@ export default class extends Controller {
 
     this.#addMarkersToMap();
     this.#fitMapToMarkers();
+    this.#addFocusButton(); // Add the focus button
   }
 
+  // Function to add markers to the map
   #addMarkersToMap() {
     this.markersValue.forEach((marker, index) => {
       console.log(`Adding marker ${index + 1}:`, marker);
@@ -38,6 +40,9 @@ export default class extends Controller {
       const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(`
         <h3>${marker.name}</h3>
         <p>${marker.address}</p>
+        <p style="color: ${marker.availability ? "green" : "red"};">
+        ${marker.availability ? "Available" : "Unavailable"}
+        </p>
       `);
 
       // Add the marker and bind the popup to it
@@ -48,12 +53,61 @@ export default class extends Controller {
     });
   }
 
+  // Function to refocus the map on all markers
   #fitMapToMarkers() {
     const bounds = new mapboxgl.LngLatBounds();
+
+    // Extend the bounds to include all markers
     this.markersValue.forEach((marker) => {
       bounds.extend([marker.lng, marker.lat]);
     });
 
-    this.map.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 0 });
+    // Fit the map to the markers' bounds
+    this.map.fitBounds(bounds, {
+      padding: 70,
+      maxZoom: 15,
+      duration: 1000 // Smooth transition
+    });
+  }
+
+  // Function to add a custom button to the map for focusing/overviewing
+  #addFocusButton() {
+    // Create the button element
+    const button = document.createElement("button");
+    button.innerHTML = "Focus"; // Initial button text
+    button.className = "focus-button"; // Add custom class for styling
+
+    let isOverview = false;
+
+    // toggles between focus and overview
+    button.onclick = () => {
+      if (!isOverview) {
+        // Focus on a specific area
+        this.map.flyTo({
+          center: [23.7351, 37.987],
+          zoom: 14,
+          speed: 1.5,
+          curve: 1
+        });
+
+        // Change the button text to "Overview"
+        button.innerHTML = "Overview";
+      } else {
+        this.#fitMapToMarkers();
+        button.innerHTML = "Focus";
+      }
+
+      // Toggle the state
+      isOverview = !isOverview;
+    };
+
+    // Create a custom control to add the button to the map container
+    const container = document.querySelector(".map-container");
+    const buttonContainer = document.createElement("div");
+    buttonContainer.className = "focus-button-container";
+    buttonContainer.appendChild(button);
+
+    // Append the button to the map container
+    container.appendChild(buttonContainer);
   }
 }

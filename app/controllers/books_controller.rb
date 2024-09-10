@@ -19,7 +19,8 @@ class BooksController < ApplicationController
           name: bookstore.name,
           address: bookstore.address, 
           lat: bookstore.latitude,
-          lng: bookstore.longitude
+          lng: bookstore.longitude,
+          availability: bookstore.availability
         }
       end
 

@@ -231,7 +231,6 @@ class PagesController < ApplicationController
 
     # Return the array of book objects
     @books_for_carousel
-  end
 
     if @random_rec
       titles, authors = split_array_text(@random_rec)
