@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_10_132911) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_11_082431) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,9 +24,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_10_132911) do
     t.text "cover_image_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["author"], name: "index_books_on_author"
-    t.index ["publication_year"], name: "index_books_on_publication_year"
-    t.index ["title"], name: "index_books_on_title"
   end
 
   create_table "bookstore_books", force: :cascade do |t|
@@ -72,6 +69,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_10_132911) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["read_book_id"], name: "index_reviews_on_read_book_id"
+  end
+
+  create_table "seasons", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_seasons_on_book_id"
   end
 
   create_table "solid_queue_blocked_executions", force: :cascade do |t|
@@ -223,6 +227,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_10_132911) do
   add_foreign_key "recommendations", "books"
   add_foreign_key "recommendations", "users"
   add_foreign_key "reviews", "read_books"
+  add_foreign_key "seasons", "books"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
