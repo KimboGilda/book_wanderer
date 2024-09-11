@@ -13,7 +13,7 @@ class RecommendationJob < ApplicationJob
 
       # Create text body for request
       @text = "Please provide two arrays:
-              Array 1: Titles — this array should contain 5 famous or classic book titles that are influenced by the books I have read: #{@book_titles_str}.
+              Array 1: Titles — this array should contain 10 famous or classic book titles that are influenced by the books I have read: #{@book_titles_str}.
               Array 2: Authors — this array should contain only the last names of the authors of the books from the first array. Respond like **Array 1: Titles**.....**Array 2: Authors** and all titles and last names should be in English."
 
       # Call AI to generate recommendations
@@ -64,7 +64,6 @@ class RecommendationJob < ApplicationJob
 
           cover_image_url = earliest_book['volumeInfo']['imageLinks']&.dig('thumbnail')
           if cover_image_url
-
             # Create only if not already exists
             unless Book.exists?(title: book_title, author: book_author)
               book = Book.create!(
@@ -76,14 +75,12 @@ class RecommendationJob < ApplicationJob
                 genre: genre,
                 cover_image_url: cover_image_url
               )
-              Recommendation.create(
-                user: user,
-                book: book
-              )
-              # Add to the carousel array
-
             else
               book = Book.find_by(title: book_title, author: book_author)
+            end
+
+            # Check if the recommendation exists for the user and book
+            unless Recommendation.exists?(user: user, book: book)
               Recommendation.create(
                 user: user,
                 book: book
