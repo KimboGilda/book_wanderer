@@ -3,12 +3,12 @@ Rails.application.routes.draw do
   root to: "pages#home"
   get 'random_books', to: 'pages#random_books', defaults: { format: :json }
   get 'our_selection', to: 'pages#our_selection', defaults: { format: :json }
-
+  get 'season', to: 'pages#season', defaults: { format: :json }
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
   # root "posts#index"
-
+  post 'start_recommendation', to: 'pages#start_recommendation'
   get 'books_for_carousel', to: 'pages#load_user_content'
 
   resources :books do

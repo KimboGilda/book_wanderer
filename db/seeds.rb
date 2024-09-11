@@ -8,6 +8,7 @@ Review.destroy_all
 Book.destroy_all
 User.destroy_all
 Bookstore.destroy_all
+Recommendation.destroy_all
 puts "All data destroyed"
 
 require 'httparty'
@@ -236,10 +237,116 @@ puts "Book to USER LIBRARY added"
 
 
 # Bookstores --------------------------------------
-bookstore1 = Bookstore.create!(address: "Asklipiou 1-3, Athina 106 79, Greece", name: "Politeia")
-bookstore2 = Bookstore.create!(address: "Gravias 3, Athina 106 78, Greece", name: "Protoporia")
-bookstore3 = Bookstore.create!(address: "Akadimias 65, Athina 106 78, Greece", name: "Patakis")
+b1 = Bookstore.create(
+  id: 35,
+  name: "Lexikopoleio",
+  address: "Stasinou 13, Pagrati, Athina 116 35, Greece",
+  availability: true
+)
 
+b2 = Bookstore.create(
+  id: 36,
+  name: "Books Plus Art & Coffee",
+  address: "Panepistimiou 37, Athina 105 64, Greece",
+  availability: false
+)
 
+b3 = Bookstore.create(
+  id: 37,
+  name: "Libro",
+  address: "Kifisias 40-42, Athina 115 26, Greece",
+  availability: true
+)
+
+b4 = Bookstore.create(
+  id: 38,
+  name: "Little Tree Books & Coffee",
+  address: "Kavalotti 2, Athina 117 42, Greece",
+  availability: false
+)
+
+b5 = Bookstore.create(
+  id: 39,
+  name: "Booktalks",
+  address: "Artemonos 47, Dafni 172 37, Greece",
+  availability: true
+)
+
+b6 = Bookstore.create(
+  id: 40,
+  name: "To Kato Selini",
+  address: "Ermou 132, Monastiraki, Athina 105 54, Greece",
+  availability: true
+)
+
+b7 = Bookstore.create(
+  id: 41,
+  name: "Hyper Hypo",
+  address: "Voulis 34, Athina 105 57, Greece",
+  availability: false
+)
+
+b8 = Bookstore.create(
+  id: 42,
+  name: "Εκδόσεις Στερέωμα",
+  address: "Asklipiou 37, Athina 106 80, Greece",
+  availability: true
+)
+
+b9 = Bookstore.create(
+  id: 43,
+  name: "Epi Lexei",
+  address: "Stournari 35, Exarcheia, Athina 106 82, Greece",
+  availability: false
+)
+
+b10 = Bookstore.create(
+  id: 44,
+  name: "Voyager Bookstore",
+  address: "Stournari 11, Athina 106 83, Greece",
+  availability: true
+)
+
+b11 = Bookstore.create(
+  id: 45,
+  name: "Books Journal",
+  address: "Voulis 50, Athina 105 57, Greece",
+  availability: true
+)
+
+b12 = Bookstore.create(
+  id: 47,
+  name: "Bibliotheque",
+  address: "Mavrommateon 16, Athina 104 34, Greece",
+  availability: false
+)
+
+b13 = Bookstore.create(
+  id: 48,
+  name: "Enastron",
+  address: "Solonos 101, Athina 106 78, Greece",
+  availability: true
+)
+
+b14 = Bookstore.create(
+  id: 49,
+  name: "Blacklight",
+  address: "Stadiou 10, Athina 105 64, Greece",
+  availability: false
+)
+
+b15 = Bookstore.create(
+  id: 50,
+  name: "Katsanos",
+  address: "Evangelistrias 17, Athina 105 63, Greece",
+  availability: true
+)
+
+b16 = Bookstore.create(
+  id: 51,
+  name: "Evripidis Bookstore",
+  address: "Andrea Papandreou 11, Chalandri 152 32, Greece",
+  availability: true
+)
 
 puts 'End for now, mb some changes later'

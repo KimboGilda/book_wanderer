@@ -19,30 +19,29 @@
 
         <div class="extra-content">
           <%# Check if Book already in Library %>
-            <% if @availability %>
+          <% if @availability == 'available' %>
             <%= link_to "Add to Library",
-            book_user_libraries_path(@book),
-            data: {turbo_method: :post},
-            class: "btn btn-dark btn-sm"%>
+                        book_user_libraries_path(@book),
+                        data: { turbo_method: :post },
+                        class: "btn btn-secondary btn-sm" %>
           <% elsif @availability == 'library' %>
-            <%= link_to "Already in Library",
-            book_user_library_path(@book),
-            data: { turbo_method: :delete },
-            class: "btn btn-secondary btn-sm" %>
+            <%= link_to "In Library",
+                        book_user_libraries_path(@book),
+                        data: { turbo_method: :delete },
+                        class: "btn btn-secondary btn-sm" %>
           <% else %>
             <%= link_to "Read",
                         read_book_path(@book),
                         data: { turbo_method: :delete },
-                        style: "font-weight: bold; border-radius: 5px; border: 1px solid grey; box-shadow: 0 0 16px rgba(0, 0, 0, .1); background-color: #6c757d;", 
-                        class: "btn btn-sm" %>
+                        class: "btn btn-dark btn-sm" %>
           <% end %>
 
           <!-- Nearby Button -->
            <button id="nearby"
-            class="btn btn-secondary btn-sm"
+            class="btn btn-dark btn-sm"
             data-action="click->bookstores#toggle_map"
           >
-            <i class="fa-solid fa-map-location-dot fa-2x"></i>
+            <i class="fa-solid fa-map-location-dot fa-lg"></i>
           </button>
 
         </div>
@@ -65,24 +64,34 @@
 
     <!-- Review Form -->
     <div data-controller="review-form" id="review_form" style="margin-top: 20px;">
-      <button data-action="click->review-form#toggle" class="button-review-toggle" style="padding: 10px 15px; font-size: 14px;">
-        Add a review
-      </button>
+
+
+      <% if @availability == 'read' %>
+        <button data-action="click->review-form#toggle" class="btn btn-dark btn-sm button-review-toggle" style="padding: 10px 15px; font-size: 14px;">
+          Add a review
+        </button>
+      <% else  %>
+        <button data-action="click->review-form#toggle" class="button-review-toggle" style="padding: 10px 15px; font-size: 14px; font-weight: bold; border-radius: 5px; border: 1px solid grey; box-shadow: 0 0 16px rgba(0, 0, 0, .1); background-color: #6c757d;" disabled>
+          Add a review
+        </button>
+      <% end %>
+
       <div data-review-form-target="form" class="d-none">
         <%= form_with(model: [@book, @book.reviews.new], data: { action: "turbo:submit-end->review-form#submitEnd" }) do |form| %>
           <div class="form-group" style="margin-bottom: 10px;">
-            <%= form.text_area :content, rows: 4, style: "margin-top: 10px; width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;" %>
+            <%= form.text_area :content, rows: 4, style: "margin-top: 10px; width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ccc;" %>
           </div>
-          <%= form.submit "Submit Review", class: "submit-form", style: "padding: 10px 15px; font-size: 14px;" %>
+          <%= form.submit "Submit Review", class: "btn btn-dark btn-sm" %>
         <% end %>
       </div>
     </div>
 
     <!-- Map Container -->
+  
     <div class="map-container" data-bookstores-target="map">
-      <div style="width: 100%; height: 600px;" 
+
+      <div style="margin-left: 1rem; width: 100%; height: 600px;" 
            data-controller="map" 
-           <%# data-map-markers-value='[{"name":"Politeia","address":"Asklipiou 1-3, Athina 106 79, Greece","lat":37.981981,"lng":23.733991},{"name":"Protoporia","address":"Gravias 3, Athina 106 78, Greece","lat":37.983226,"lng":23.730489},{"name":"Patakis","address":"Akadimias 65, Athina 106 78, Greece","lat":37.983107,"lng":23.732837}]' %>
            data-map-markers-value= '<%= @markers.to_json %>'
            data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
       </div>
