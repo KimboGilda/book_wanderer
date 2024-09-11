@@ -1,4 +1,4 @@
-// Banner Styles
+// -------------- Banner Styles -------------- //
 .banner {
   background-size: cover;
   background-position: center;
@@ -20,20 +20,20 @@
   }
 
   .btn-primary {
-    background-color: #6a9c89;
-    border: none;
+    background-color: #295F98;
+    border-radius: 20px;
     padding: 12px 25px;
     font-size: 1.2rem;
     text-transform: uppercase;
     transition: background-color 0.3s ease;
 
     &:hover {
-      background-color: darken(#6a9c89, 10%);
+      background-color: #1E3A68;
     }
   }
 }
 
-// Feature Section Styles
+// -------------- Feature Section Styles -------------- //
 .feature-box {
   margin-top: 30px;
 
@@ -51,7 +51,7 @@
     }
 
     i {
-      color: #6a9c89;
+      color: #295F98;
       margin-bottom: 15px;
     }
 
@@ -67,7 +67,7 @@
   }
 }
 
-// Carousel Styles
+// -------------- Carousel Styles -------------- //
 .scrolling-wrapper {
   overflow-x: auto;
   white-space: nowrap;
@@ -109,29 +109,39 @@
   }
 }
 
-// Button Section Styles
+// -------------- Button Section Styles-------------- //
 .button-box {
-  width: 400px;
+  width: 600px;
   margin: 35px auto;
   position: relative;
-  border-radius: 30px;
+  border-radius: 20px;
   background: #fff;
   display: flex;
   justify-content: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .toggle-btn {
-  padding: 12px 40px;
+  padding: 0.5rem 2rem;
   cursor: pointer;
-  background: linear-gradient(135deg, #6a9c89, #93cba9);
+  background: #295F98;
   color: white;
   font-family: "Poppins", sans-serif;
-  border-radius: 30px;
-  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s ease;
+  border: none;
+  display: inline-block;
+  flex: 1;
+  max-width: 250px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
   &:hover {
     transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background-color: #1E3A68;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
   }
 }

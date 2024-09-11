@@ -9,14 +9,33 @@ class BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
-    if UserLibrary.exists?(book_id: params[:id], user_id: current_user.id) || ReadBook.exists?(book_id: params[:id], user_id: current_user.id)
-      @availability = false
+    
+    # addings instances for creating bookstores markers
+    @bookstores = Bookstore.all
+        # The `geocoded` scope filters only flats with coordinates
+        # Build the markers array
+        @markers = @bookstores.map do |bookstore|
+         {
+          name: bookstore.name,
+          address: bookstore.address, 
+          lat: bookstore.latitude,
+          lng: bookstore.longitude,
+          availability: bookstore.availability
+        }
+      end
+
+
+    if UserLibrary.exists?(book_id: params[:id], user_id: current_user.id)
+      @availability = 'library'
+    elsif ReadBook.exists?(book_id: params[:id], user_id: current_user.id)
+      @availability = 'read'
     else
-      @availability = true
+      @availability = 'available'
     end
 
-
-    @availability = !UserLibrary.exists?(book_id: params[:id], user_id: current_user.id)
+# || ReadBook.exists?(book_id: params[:id], user_id: current_user.id)
+#
+    # @availability = !UserLibrary.exists?(book_id: params[:id], user_id: current_user.id)
 
     # Find users who have read the current book
     # pluck is a built in ruby method that shows as more than one value - it's like distinct in SQL

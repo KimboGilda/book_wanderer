@@ -1,6 +1,47 @@
-.alert {
+.alert-center {
   position: fixed;
   bottom: 16px;
   right: 16px;
   z-index: 1000;
+}
+
+#alert-book {
+  width: 250px; /* Smaller width */
+  padding: 10px; /* Less padding */
+  font-size: 12px; /* Smaller font size */
+  max-width: 100%;
+  left: 10%;
+  top: 42%;
+}
+
+#alert-message {
+  background-color: rgba(224, 11, 11, 0.414)
+
+}
+
+
+.hideMe {
+  -moz-animation: cssAnimation 0s ease-in 3s forwards;
+  /* Firefox */
+  -webkit-animation: cssAnimation 0s ease-in 3s forwards;
+  /* Safari and Chrome */
+  -o-animation: cssAnimation 0s ease-in 3s forwards;
+  /* Opera */
+  animation: cssAnimation 0s ease-in 3s forwards;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+@keyframes cssAnimation {
+  to {
+      width:0;
+      height:0;
+      display:none;
+  }
+}
+@-webkit-keyframes cssAnimation {
+  to {
+      width:0;
+      height:0;
+      display:none;
+  }
 }

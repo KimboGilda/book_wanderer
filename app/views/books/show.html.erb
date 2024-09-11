@@ -1,93 +1,130 @@
 <div class="all">
+  <!-- Left Side Container -->
   <div class="left_01" data-controller="bookstores">
     <div class="upper-container">
-      <%# Book Cover and buttons(e.g nearby button) %>
+      <!-- Book Cover and Buttons -->
       <div class="left-upper-container">
-      
+
         <%# Book Cover %>
+
         <div class="book-cover">
-          <%# Check if @book.cover_image_url is NIL  %>
-        <% if @book.cover_image_url %>
-          <%= image_tag(@book.cover_image_url, alt: "book-cover", style: "margin-top: 0.5rem; max-width: 100%; max-height: 100%; object-fit: contain;") %>
-        <% else %>
-          <p>No such file</p>
-        <% end %>
+          <% if @book.cover_image_url.present? %>
+            <%= image_tag(@book.cover_image_url, alt: "book-cover", style: "margin-top: 0.5rem; max-width: 100%; max-height: 100%; object-fit: contain;") %>
+          <% else %>
+            <p>No such file</p>
+          <% end %>
         </div>
-        
+
         <%# Additional Content Below Book Cover %>
+
         <div class="extra-content">
           <%# Check if Book already in Library %>
-        <% if @availability %>
-          <%= link_to "Add to Library",
-          book_user_libraries_path(@book),
-          data: {turbo_method: :post},
-          style: "font-weight: bold;  border-radius: 5px;
-                  border: 1px solid grey;
-                  box-shadow: 0 0 16px rgba(0, 0, 0, .1);
-                  background-color: #389568", class: "btn btn-sm" %>
-        <% else %>
-          <%= link_to "Already in Library",
-          book_user_library_path(@book),
-          data: { turbo_method: :delete },
-          style: "font-weight: bold;  border-radius: 5px;
-                  border: 1px solid grey;
-                  box-shadow: 0 0 16px rgba(0, 0, 0, .1);
-                  background-color: #6c757d", class: "btn btn-sm" %>
-        <% end %>
+          <% if @availability == 'available' %>
+            <%= link_to "Add to Library",
+                        book_user_libraries_path(@book),
+                        data: { turbo_method: :post },
+                        class: "btn btn-secondary btn-sm" %>
+          <% elsif @availability == 'library' %>
+            <%= link_to "In Library",
+                        book_user_libraries_path(@book),
+                        data: { turbo_method: :delete },
+                        class: "btn btn-secondary btn-sm" %>
+          <% else %>
+            <%= link_to "Read",
+                        read_book_path(@book),
+                        data: { turbo_method: :delete },
+                        class: "btn btn-dark btn-sm" %>
+          <% end %>
 
-          <button id="nearby"
-            class="btn btn-secondary btn-sm"
+          <!-- Nearby Button -->
+           <button id="nearby"
+            class="btn btn-dark btn-sm"
             data-action="click->bookstores#toggle_map"
-          >Nearby </button>
+          >
+            <i class="fa-solid fa-map-location-dot fa-lg"></i>
+          </button>
+
         </div>
       </div>
 
-      <%# Book Details right container %>
+      <!-- Book Details Right Container -->
       <div class="book-details ms-3 p-3 text-center">
         <h2><%= @book.title %></h2>
-        <p><%= @book.author %></p>
         <p class="text-wrap"><%= @book.summary %></p>
       </div>
     </div>
-    
+
+
+    <!-- Reviews Section -->
+    <div id="reviews" class="reviews" data-review-form-target="reviews" style="margin-top: 40px;">
+      <% @book.reviews.each do |review| %>
+        <%= render partial: "reviews/review", locals: { review: review } %>
+      <% end %>
+    </div>
+
+    <!-- Review Form -->
+    <div data-controller="review-form" id="review_form" style="margin-top: 20px;">
+
+
+      <% if @availability == 'read' %>
+        <button data-action="click->review-form#toggle" class="btn btn-dark btn-sm button-review-toggle" style="padding: 10px 15px; font-size: 14px;">
+          Add a review
+        </button>
+      <% else  %>
+        <button data-action="click->review-form#toggle" class="button-review-toggle" style="padding: 10px 15px; font-size: 14px; font-weight: bold; border-radius: 5px; border: 1px solid grey; box-shadow: 0 0 16px rgba(0, 0, 0, .1); background-color: #6c757d;" disabled>
+          Add a review
+        </button>
+      <% end %>
+
+      <div data-review-form-target="form" class="d-none">
+        <%= form_with(model: [@book, @book.reviews.new], data: { action: "turbo:submit-end->review-form#submitEnd" }) do |form| %>
+          <div class="form-group" style="margin-bottom: 10px;">
+            <%= form.text_area :content, rows: 4, style: "margin-top: 10px; width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ccc;" %>
+          </div>
+          <%= form.submit "Submit Review", class: "btn btn-dark btn-sm" %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Map Container -->
+  
     <div class="map-container" data-bookstores-target="map">
-      <div style="width: 100%; height: 600px;"
-      data-controller="map"
-       // data-map-markers-value='[{"name":"Patakis","address":"Akadimias 65, Athina 106 78, Greece","lat":37.983107,"lng":23.732837},{"name":"Protoporia","address":"Gravias 3, Athina 106 78, Greece","lat":37.983226,"lng":23.73048},{"name":"Politeia","address":"Asklipiou 1-3, Athina 106 79, Greece","lat":37.981981,"lng":23.733991}]'
-      data-map-markers-value="<%= @markers.to_json %>"
-      data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
+
+      <div style="margin-left: 1rem; width: 100%; height: 600px;" 
+           data-controller="map" 
+           data-map-markers-value= '<%= @markers.to_json %>'
+           data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+      </div>
     </div>
   </div>
 
-  <%# Right Container %>
+  <!-- Right Side Container -->
   <div class="right-container">
     <strong><p class="text-center m-3">Readers also enjoyed</p></strong>
 
-    <%# Loop through the @other_books %>
+    <!-- Related Books -->
     <div class="related-books">
       <% if @other_books.present? %>
         <ul class="list-group">
           <% @other_books.each do |book| %>
             <li class="list-group-item">
-              <div class="related-book-item">
-               <%# book cover %>
+              <div class="related-book-item d-flex">
+                <!-- Related Book Cover -->
                 <div class="related-book-cover">
                   <%= image_tag(book.cover_image_url, alt: book.title, style: "width: 50px; height: 75px; object-fit: contain;") %>
                 </div>
 
-                <%# book title and author %>
+                <!-- Related Book Details -->
                 <div class="related-book-details ms-2">
                   <%= link_to book.title, book_path(book), class: "fw-bold readers-liked" %>
                   <p><small>by <%= book.author %></small></p>
-
-                  <%# Display emails of users who read this book %>
                 </div>
               </div>
             </li>
           <% end %>
         </ul>
       <% else %>
-        <p>No other books were found.</p>
+        <p class="text-center">No other books were found.</p>
       <% end %>
     </div>
   </div>
