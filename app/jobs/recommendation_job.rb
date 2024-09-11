@@ -13,7 +13,7 @@ class RecommendationJob < ApplicationJob
 
       # Create text body for request
       @text = "Please provide two arrays:
-              Array 1: Titles — this array should contain 5 famous or classic book titles that are influenced by the books I have read: #{@book_titles_str}.
+              Array 1: Titles — this array should contain 10 famous or classic book titles that are influenced by the books I have read: #{@book_titles_str}.
               Array 2: Authors — this array should contain only the last names of the authors of the books from the first array. Respond like **Array 1: Titles**.....**Array 2: Authors** and all titles and last names should be in English."
 
       # Call AI to generate recommendations
