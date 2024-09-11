@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   def index
+    SeasonJob.perform_later
     if params[:query].present?
       @books = Book.search_by_title_author_and_genre(params[:query])
     else
@@ -9,7 +10,7 @@ class BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
-    
+
     # addings instances for creating bookstores markers
     @bookstores = Bookstore.all
         # The `geocoded` scope filters only flats with coordinates
@@ -17,7 +18,7 @@ class BooksController < ApplicationController
         @markers = @bookstores.map do |bookstore|
          {
           name: bookstore.name,
-          address: bookstore.address, 
+          address: bookstore.address,
           lat: bookstore.latitude,
           lng: bookstore.longitude,
           availability: bookstore.availability
