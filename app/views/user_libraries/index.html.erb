@@ -4,7 +4,7 @@
   <div class="row scrolling-wrapper">
     <% @books.each do |book| %>
       <div class="col-lg-3 col-md-6 mb-4">
-        <div class="book-card">
+        <div class="book-card d-flex flex-column position-relative">
           <% if book.cover_image_url.present? %>
             <%= link_to book_path(book) do %>
               <%= image_tag book.cover_image_url, alt: book.title, class: "book-image" %>
@@ -21,7 +21,7 @@
           <p class="book-info"><strong><%= book.author %></strong></p>
           <p class="book-info"><%= book.genre %> | ★★★★☆</p>
 
-          <div class="button--group">
+          <div class="mt-auto ms-auto button--group">
            <%= link_to content_tag(:i, "", class: "fa-solid fa-square-check icon"),
              book_read_books_path(book), style: "color:#708090; font-size: 16px; margin-left: 20px;",
              class: 'icon-wrapper',
