@@ -76,7 +76,7 @@
         </button>
       <% end %>
 
-      <div data-review-form-target="form" class="d-none">
+      <div data-review-form-target="form" class="d-none" style="margin-left: 2rem">
         <%= form_with(model: [@book, @book.reviews.new], data: { action: "turbo:submit-end->review-form#submitEnd" }) do |form| %>
           <div class="form-group" style="margin-bottom: 10px;">
             <%= form.text_area :content, rows: 4, style: "margin-top: 10px; width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ccc;" %>
