@@ -27,6 +27,7 @@ class PagesController < ApplicationController
   def start_recommendation
     # Trigger the job with the current user's ID
     SeasonJobJob.perform_later
+
   end
   # Action for fetching random books when clicking the "Random Book" button
   def random_books
@@ -44,12 +45,7 @@ class PagesController < ApplicationController
   # Action for fetching personalized recommendations when clicking the "Our Collection" button
   def our_selection
     if current_user
-
-
       @three_recommendations_pro_click = current_user.recommended_books.sample(6)
-
-      # twenty_four_recommendations
-      # @three_recommendations_pro_click = @twenty_four_recommendations.sample(6)
     else
       @three_recommendations_pro_click = []
     end
@@ -64,16 +60,17 @@ class PagesController < ApplicationController
   end
 
   def season
-    @season_rec = seasons_recomendation
-
+    @season_rec = Season.all.sample(6)
+    season_recommendations = []
+    @season_rec.each do | book |
+      season_recommendations << Book.find(book.book_id)
+    end
     respond_to do |format|
       format.json do
         render json: {
-          books_html: render_to_string(partial: "books/book", collection: @season_rec, as: :book, formats: [:html])
+          books_html: render_to_string(partial: "books/book", collection: season_recommendations, as: :book, formats: [:html])
         }, status: :ok
       end
     end
   end
 end
-
-

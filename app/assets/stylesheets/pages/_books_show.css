@@ -66,7 +66,7 @@
 .book-details h2 {
   font-size: 1.8rem;
   font-weight: bold;
-  color: #295F98;
+  color: #295f98;
 }
 
 .book-details p {
@@ -128,13 +128,13 @@
 
 .related-book-details a {
   font-weight: bold;
-  color: #295F98;
+  color: #295f98;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .related-book-details a:hover {
-  color: #295F98;
+  color: #295f98;
 }
 
 .related-book-details p {
@@ -173,8 +173,12 @@ button.btn-dark {
   border: none;
 }
 
+.button-review-toggle {
+  margin-left: 2rem;
+}
+
 button.btn-secondary {
-  background-color: #1E3A68;
+  background-color: #1e3a68;
 
   &:hover {
     background-color: #163259;
@@ -182,39 +186,38 @@ button.btn-secondary {
 }
 
 button.btn-dark {
-  background-color: #295F98;
+  background-color: #295f98;
 
   &:hover {
-    background-color: #1F4A7B;
+    background-color: #1f4a7b;
   }
 }
 
 button.btn-light {
-  background-color: #6A9DD4;
+  background-color: #6a9dd4;
 
   &:hover {
-    background-color: #5A8CC0;
+    background-color: #5a8cc0;
   }
 }
 
 .extra-content .btn[data-turbo-method="post"] {
-  background-color: #295F98;
+  background-color: #295f98;
 }
 
 .extra-content .btn[data-turbo-method="delete"] {
-  background-color: #1E3A68;
+  background-color: #1e3a68;
 }
 
 .extra-content .btn:hover,
 button.btn-secondary:hover,
 button.btn-dark:hover,
 button.btn-light:hover {
-  background-color: #4F6B99;
+  background-color: #4f6b99;
   color: white;
 }
 
 /* -------------- Map related elements -------------- */
-
 
 .map-container {
   position: relative;
@@ -323,7 +326,7 @@ button.btn-light:hover {
 
 /* -------------- review related elements -------------- */
 .reviews {
-  /* max-width: 600px; */
+  max-width: 70vw;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -360,3 +363,4 @@ button.btn-light:hover {
 .reviews .review-item + .review-item {
   margin-top: 1rem;
 }
+
