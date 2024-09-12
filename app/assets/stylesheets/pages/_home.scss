@@ -19,17 +19,30 @@
     color: rgba(255, 255, 255, 0.8);
   }
 
+  // Updated styles for the "Start Your Journey" button with consistent colors
   .btn-primary {
-    background-color: #295F98;
-    border-radius: 20px;
-    padding: 12px 25px;
-    font-size: 1.2rem;
+    background-color: #295f98;
+    border-radius: 25px;
+    padding: 15px 30px;
+    font-size: 1.5rem;
     text-transform: uppercase;
-    transition: background-color 0.3s ease;
+    font-weight: bold;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease,
+      transform 0.2s ease;
+    box-shadow: 0 4px 15px rgba(41, 95, 152, 0.4);
 
     &:hover {
-      background-color: #1E3A68;
+      background-color: #1e3a68;
+      box-shadow: 0 6px 20px rgba(41, 95, 152, 0.6);
+      transform: translateY(-5px);
     }
+  }
+
+  // Adding an icon before the text
+  #start-journey-btn::before {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    margin-right: 10px;
   }
 }
 
@@ -51,7 +64,7 @@
     }
 
     i {
-      color: #295F98;
+      color: #295f98;
       margin-bottom: 15px;
     }
 
@@ -124,7 +137,7 @@
 .toggle-btn {
   padding: 0.5rem 2rem;
   cursor: pointer;
-  background: #295F98;
+  background: #295f98; /* Consistent color */
   color: white;
   font-family: "Poppins", sans-serif;
   border-radius: 20px;
@@ -141,7 +154,7 @@
 
   &:hover {
     transform: scale(1.05);
-    background-color: #1E3A68;
+    background-color: #1e3a68; /* Consistent hover color */
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
   }
 }
