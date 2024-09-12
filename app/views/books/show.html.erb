@@ -71,7 +71,7 @@
           Add a review
         </button>
       <% else  %>
-        <button data-action="click->review-form#toggle" class="button-review-toggle" style="padding: 10px 15px; font-size: 14px; font-weight: bold; border-radius: 5px; border: 1px solid grey; box-shadow: 0 0 16px rgba(0, 0, 0, .1); background-color: #6c757d;" disabled>
+        <button data-action="click->review-form#toggle" class="button-review-toggle" data-bs-toggle="tooltip" data-bs-placement="right" title="A book must be read before adding a review!" style="padding: 10px 15px; font-size: 14px; font-weight: bold; border-radius: 5px; border: 1px solid grey; box-shadow: 0 0 16px rgba(0, 0, 0, .1); background-color: #6c757d;" disabled>
           Add a review
         </button>
       <% end %>
@@ -87,11 +87,11 @@
     </div>
 
     <!-- Map Container -->
-  
+
     <div class="map-container" data-bookstores-target="map">
 
-      <div style="margin-left: 1rem; width: 100%; height: 600px;" 
-           data-controller="map" 
+      <div style="margin-left: 1rem; width: 100%; height: 600px;"
+           data-controller="map"
            data-map-markers-value= '<%= @markers.to_json %>'
            data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
       </div>
