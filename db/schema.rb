@@ -24,9 +24,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_11_082431) do
     t.text "cover_image_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["author"], name: "index_books_on_author"
-    t.index ["publication_year"], name: "index_books_on_publication_year"
-    t.index ["title"], name: "index_books_on_title"
   end
 
   create_table "bookstore_books", force: :cascade do |t|
