@@ -5,6 +5,7 @@ puts "Destroying all data"
 ReadBook.destroy_all
 UserLibrary.destroy_all
 Review.destroy_all
+Season.destroy_all
 Book.destroy_all
 User.destroy_all
 Bookstore.destroy_all
