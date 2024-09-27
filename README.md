@@ -3,7 +3,7 @@
 **Project Description**  
 
 This project is an AI-driven book recommendation platform designed to provide personalized book suggestions based on user preferences.
-It also includes a user-friendly interface that makes exploring, saving book suggestions and book reads easily.
+It also includes a user-friendly interface that makes exploring, saving book suggestions and book reads easy.
 
 *Key features of the platform include*:
 
